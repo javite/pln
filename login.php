@@ -50,13 +50,13 @@ if($logueo){
                 </div>
                 <form id="Login" action="login.php" method="post">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" id="inputEmail" placeholder="Usuario" value=<?=$usuario?>>
+                        <input type="text" name="username" class="form-control" id="inputEmail" placeholder="javier" value=<?=$usuario?>>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>>
                     </div>
                     <div class="forgot">
-                        <a href="#">¿Olvidaste tu contraseña?</a>
+                        <a href="#">¿Olvidaste tu contraseña? 123456</a>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
