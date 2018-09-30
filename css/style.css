@@ -81,6 +81,12 @@ img {
     color: white;
 }
 
+.error {
+    color: red;
+    font-size: 11px;
+}
+
+
 @media (max-width: 700px) {
     .contenedor-usuario {
         bottom: 85%;

@@ -1,28 +1,39 @@
 <?php
-    $usuario = "";
-    $contrasena = "";
-    $logueo = false;
-if($_POST){
-    if(isset($_POST["username"])){
-        $usuario =  $_POST["username"];
-        if($_POST["username"] == "javier"){
-            $logueo = true;
-        }
-    }
-if (isset($_POST["password"])) {
-    if($_POST["password"] == "123456"){
-        $contrasena =  $_POST["password"];
-        $logueo = $logueo && true;
-    } else {$logueo = false;}
-}
-if($logueo){
+include_once("funciones.php");
+$datosFinales = [];
+$errores = [];
+$email = "";
+$contrasena ="";
+$mensajeEmail = "";
+$mensajeContrasena = "";
+
+if(isset($_SESSION["usuario"])){
     header("Location:main.php");
-    exit();
-}
- //var_dump($_POST);exit;
+    exit;
 }
 
+if($_POST){
+foreach ($_POST as $posicion => $dato) {
+    $datosFinales[$posicion] = trim($dato);
+}
+$errores = validarLogin($datosFinales);
 
+if(empty($errores)){
+    $errores = compararContraseña($datosFinales);  
+    if(empty($errores)){
+        $_SESSION["usuario"] = buscarPorEmail($datosFinales["email"])["nombre"];
+        header("Location:main.php");
+        exit;
+    }
+}
+
+if(isset($errores["email"])){
+    $mensajeEmail = $errores["email"];
+}
+if(isset($errores["contraseña"])){
+    $mensajeContrasena = $errores["contraseña"];
+}
+}
 
 ?>
 
@@ -50,13 +61,13 @@ if($logueo){
                 </div>
                 <form id="Login" action="login.php" method="post">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" id="inputEmail" placeholder="javier" value=<?=$usuario?>>
+                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="email" value=<?=$email?>><span class="error"><?=$mensajeEmail?></span>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>>
+                        <input type="password" name="contraseña" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>><span class="error"><?=$mensajeContrasena?></span>
                     </div>
                     <div class="forgot">
-                        <a href="#">¿Olvidaste tu contraseña? 123456</a>
+                        <a href="registracion.php">¿Olvidaste tu contraseña?</a>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>

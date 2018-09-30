@@ -33,6 +33,14 @@ switch (date('N')) {
 }
 $date = $dia.", ".$date; 
 
+session_start();
+if(isset($_SESSION["usuario"])){
+    $nombreUsuario = $_SESSION["usuario"];
+} else {
+    $nombreUsuario = "Ingresar";
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +61,7 @@ $date = $dia.", ".$date;
             <img src="images/fondo4.jpg" alt="">
             <div class="contenedor-usuario">
                 <i class="material-icons">account_circle</i>
-                <a class="usuario" href="login.php">Ingresar</a>
+                <a class="usuario" href="login.php"><?=$nombreUsuario?></a>
             </div>
             <div class= "contenedor-fecha">
                 <p class="hora"><?=$hora?></p>
