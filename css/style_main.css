@@ -2,9 +2,32 @@
     box-sizing: border-box;
 }
 
+
+.background-image {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    display: block;
+    background-image: url(../images/fondo-login.jpg);
+    /* width: 1200px; */
+    height: 100%;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+  }
+
+.lamp{
+    height: 80px;
+}
 .contenedor-fecha {
     background-color: rgba(150, 150, 150, 0.5);
     z-index: 20;
+}
+h1, h3, h5{
+    font-family: 'Quicksand', sans-serif;
 }
 
 .texto{
@@ -22,20 +45,21 @@ img.img-fondo {
     filter: blur(5px);
     display: block;
 }
+
 img.planta{
     width: 60px;
 }
 
 .circulo-gradiente{
-    position: absolute;
+    /* position: absolute;
     top:50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     padding: 5px; 
     border-radius: 50%; 
     display: inline-block;
-    background: yellow;
-    background: linear-gradient(yellow, rgb(196, 32, 211),#00b8ff);
+    background: rgb(26, 105, 209);
+    /* background: linear-gradient(yellow, rgb(196, 32, 211),#00b8ff); */
 }
 .circulo-principal {
     width: 200px; 
