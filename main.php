@@ -12,11 +12,14 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
 </head>
 <body>
-    <div class="fondo">
-        <div class= "contenedor-fecha">
+    <div class="container">
+    <div class="row">
+        <div class= "contenedor-fecha col-8">
             <p class="texto">Nombre de la planta</p>
             <p class="texto">White widow</p>
         </div>
+    </div>
+
         <img class="img-fondo" src="images/fondo-login.jpg" alt="">
         <div class="circulo-gradiente">
             <div class="circulo-principal">
