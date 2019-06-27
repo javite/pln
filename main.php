@@ -66,7 +66,7 @@
                 <h5 class="card-header">Iluminación</h5>
                 <div class="card-body">
                     <!-- <p class="card-title">Estado</p> -->
-                    <img class="lamp" src="images/lampara.png" alt="Card image cap">
+                    <img class="lamp" src="images/lamp.png" alt="Card image cap">
                     <h3 class="card-text text-success">Encendida</h3>
                     <a href="#" class="btn btn-secondary">Apagar</a>
                 </div>
