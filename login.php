@@ -1,38 +1,33 @@
 <?php
-include_once("funciones.php");
-$datosFinales = [];
+
+require_once("init.php");
+
 $errores = [];
 $email = "";
-$contrasena ="";
-$mensajeEmail = "";
 $mensajeContrasena = "";
+$mensajeEmail = "";
+$contrasena = "";
 
-if(isset($_SESSION["usuario"])){
-    header("Location:main.php");
-    exit;
+if($authentication->isLogged()){
+    header("Location:main.php");exit;
 }
 
-if($_POST){
-foreach ($_POST as $posicion => $dato) {
-    $datosFinales[$posicion] = trim($dato);
-}
-$errores = validarLogin($datosFinales);
-
-if(empty($errores)){
-    $errores = compararContraseña($datosFinales);  
-    if(empty($errores)){
-        $_SESSION["usuario"] = buscarPorEmail($datosFinales["email"])["nombre"];
-        header("Location:main.php");
-        exit;
+if ($_POST) {
+  $errores = $validator->validarLogin($_POST);
+  if (empty($errores)) {
+    $authentication->login($_POST["email"]);
+    if (isset($_POST["remember-me"])) {
+      setcookie("usuarioLogueado", $_POST["email"], time() + 60 * 60 * 24 * 7);
     }
-}
-
-if(isset($errores["email"])){
-    $mensajeEmail = $errores["email"];
-}
-if(isset($errores["contraseña"])){
-    $mensajeContrasena = $errores["contraseña"];
-}
+    header("Location:main.php");exit;
+  } else{
+      if(isset($errores["password"])){
+        $mensajeContrasena = $errores["password"];
+      }
+      if(isset($errores["email"])){
+       $mensajeEmail = $errores["email"];
+      }
+  }
 }
 
 ?>
@@ -52,7 +47,7 @@ if(isset($errores["contraseña"])){
 
 <body id="LoginForm">
     <div class="fondo">
-    <img src="images/fondo4.jpg" alt="">
+        <img src="images/logo_grower-lab.svg" alt="">
         <div class="login-form">
             <div class="main-div">
                 <div class="panel">
@@ -64,7 +59,10 @@ if(isset($errores["contraseña"])){
                         <input type="text" name="email" class="form-control" id="inputEmail" placeholder="email" value=<?=$email?>><span class="error"><?=$mensajeEmail?></span>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="contraseña" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>><span class="error"><?=$mensajeContrasena?></span>
+                        <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>><span class="error"><?=$mensajeContrasena?></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="remember-me" class="form-control" value=""> Recordame
                     </div>
                     <div class="forgot">
                         <a href="registracion.php">¿Olvidaste tu contraseña?</a>

@@ -22,7 +22,10 @@
                 </div>
             </div>
         </div>
-
+        <div class="contenedor-usuario">
+            <i class="material-icons">account_circle</i>
+            <a class="usuario" href="logout.php">logout</a>
+        </div>
         <div class="card-deck">
                 <div class="card bg-light mb-3 text-center">
                     <h5 class="card-header">Temperatura Interna</h5>

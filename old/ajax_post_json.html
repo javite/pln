@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                <title>Document</title>
+            </head>
+<body>
+
+<h2>Use the HTTP method POST to send data to the PHP file.</h2>
+
+<p id="demo"></p>
+
+<script>
+function sendpost(){
+var obj, dbParam, xmlhttp, myObj, x, txt = "";
+obj = { "temperatura":"12", "humedad":10 };
+dbParam = JSON.stringify(obj);
+xmlhttp = new XMLHttpRequest();
+// xmlhttp.onreadystatechange = function() {
+//   if (this.readyState == 4 && this.status == 200) {
+//     myObj = JSON.parse(this.responseText);
+//     for (x in myObj) {
+//       txt += myObj[x].name + "<br>";
+//     }
+//     document.getElementById("demo").innerHTML = txt;
+//   }
+// };
+xmlhttp.open("GET", "guardar.php?measure="+ dbParam, true);
+//xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+// xmlhttp.send("measure=" + dbParam);
+console.log("measure=" + dbParam);
+console.log("enviado");
+}
+</script>
+
+<p>Try changing the "table" property from "customers" to "products".</p>
+
+<form>
+    
+    <input type="submit" onclick="sendpost()">
+</form>
+
+</body>
+</html>

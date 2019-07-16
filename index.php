@@ -1,5 +1,6 @@
 <?php
-// print date('H:i');
+
+require_once("init.php");
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 $hora = date('H:i');
@@ -33,9 +34,8 @@ switch (date('N')) {
 }
 $date = $dia.", ".$date; 
 
-session_start();
-if(isset($_SESSION["usuario"])){
-    $nombreUsuario = $_SESSION["usuario"];
+if($authentication->isLogged()){
+    $nombreUsuario = $_SESSION["usuarioLogueado"];
 } else {
     $nombreUsuario = "Ingresar";
 }
@@ -48,7 +48,7 @@ if(isset($_SESSION["usuario"])){
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="refresh" content="30">
+    <!-- <meta http-equiv="refresh" content="30"> -->
     <title>GROWER-LAB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -58,7 +58,8 @@ if(isset($_SESSION["usuario"])){
 </head>
 <body>
     <div class="fondo">
-            <img src="images/fondo4.jpg" alt="">
+            <!-- <img src="images/fondo4.jpg" alt=""> -->
+            <img src="images/logo_grower-lab.svg" alt="">
             <div class="contenedor-usuario">
                 <i class="material-icons">account_circle</i>
                 <a class="usuario" href="login.php"><?=$nombreUsuario?></a>
