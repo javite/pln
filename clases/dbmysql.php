@@ -1,65 +1,65 @@
 <?php
 
-include_once("clases/db.php");
-include_once("clases/usuario.php");
+include_once("db.php");
+include_once("usuario.php");
 
 class DBMySQL extends DB {
-  protected $dbUsuarios;
+  protected $dataBase;
 
-  public function __construct() {
-    $credenciales = file_get_contents("credenciales.json");
+  public function __construct($cred) {
+
+    $credenciales = file_get_contents($cred); //en $cred se pasa el nombre del archivo de credenciales.json
     $credenciales = json_decode($credenciales, true);
     $dsn = 'mysql:dbname=grower-lab;host=localhost;port=3306';
     $usuario = $credenciales["usuario"];
     $pass = $credenciales["password"];
 
     try {
-      $this->dbUsuarios = new PDO($dsn, $usuario, $pass);
-      $this->dbUsuarios->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $this->dataBase = new PDO($dsn, $usuario, $pass);
+      $this->dataBase->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (\Exception $e) {
       echo "Error in database connection.";exit;
     }
   }
 
   function crearUsuario(Usuario $user) {
-    $consult = $this->dbUsuarios->prepare("INSERT into users values (default, :name, :last_name, :user, :password,  :email, :token, :created_at, :modified_at)");
+    $query = $this->dataBase->prepare("INSERT into users values (default, :name, :last_name, :user, :password,  :email, :token, :created_at, :modified_at)");
     $now = date("Y-m-d h:i:s");
-    $consult->bindValue(":name", $user->getName());
-    $consult->bindValue(":last_name", $user->getLast_name());
-    $consult->bindValue(":user", $user->getUser());
-    $consult->bindValue(":password", $user->getPassword());
-    $consult->bindValue(":email", $user->getEmail());
-    $consult->bindValue(":token", $user->getToken());
-    $consult->bindValue(":created_at", $now);
-    $consult->bindValue(":modified_at", $now);
-    
-    $consult->execute();
+    $query->bindValue(":name", $user->getName());
+    $query->bindValue(":last_name", $user->getLast_name());
+    $query->bindValue(":user", $user->getUser());
+    $query->bindValue(":password", $user->getPassword());
+    $query->bindValue(":email", $user->getEmail());
+    $query->bindValue(":token", $user->getToken());
+    $query->bindValue(":created_at", $now);
+    $query->bindValue(":modified_at", $now);
+    $query->execute();
   }
 
-  function traerUsuarios() {
-    $consulta = $this->dbUsuarios->prepare("SELECT * FROM usuarios");
-    $consulta->execute();
-    $usuariosArray = $consulta->fetchAll(PDO::FETCH_ASSOC);
-    $usuarios = [];
-    foreach ($usuariosArray as $usuarioArray) {
-      $usuarios[] = new Usuario($usuarioArray);
+  function getUsers() {
+    $query = $this->dataBase->prepare("SELECT * FROM users");
+    $query->execute();
+    $usersArray = $query->fetchAll(PDO::FETCH_ASSOC);
+    $users = [];
+    foreach ($usersArray as $userArray) {
+      $users[] = new Usuario($userArray);
     }
-    return $usuarios;
+    return $users;
   }
 
   function buscarPorEmail($email) {
-    $consulta = $this->dbUsuarios->prepare("SELECT * FROM users where email = :email");
-    $consulta->bindValue(":email", $email);
-    $consulta->execute();
-    $usuarioArray = $consulta->fetch(PDO::FETCH_ASSOC);
-    if ($usuarioArray == null) {
+    $query = $this->dataBase->prepare("SELECT * FROM users where email = :email");
+    $query->bindValue(":email", $email);
+    $query->execute();
+    $userArray = $query->fetch(PDO::FETCH_ASSOC);
+    if ($userArray == null) {
       return null;
     }
-    return new Usuario($usuarioArray);
+    return new Usuario($userArray);
   }
 
   function buscarPorID($id) {
-    $consulta = $this->dbUsuarios->prepare("SELECT * FROM usuarios where id = :id");
+    $consulta = $this->dataBase->prepare("SELECT * FROM usuarios where id = :id");
     $consulta->bindValue(":id", $id);
     $consulta->execute();
     $usuarioArray = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -67,6 +67,38 @@ class DBMySQL extends DB {
       return NULL;
     }
     return new Usuario($usuarioArray);
+  }
+
+  function getLastMeasurement($device_id) {
+    $consulta = $this->dataBase->prepare("SELECT * FROM measurements where device_id = :device_id ORDER BY ID DESC LIMIT 1 ");
+    $consulta->bindValue(":device_id", $device_id);
+    $consulta->execute();
+    $measurement = $consulta->fetch(PDO::FETCH_ASSOC);
+    return $measurement;
+  }
+
+  public function generalQuery(Object $obj) {
+    $query = $this->dataBase->prepare("SELECT * FROM $obj->table LIMIT $obj->limit");
+    // $query->bindValue(":table", $obj->table);
+    // $query->bindValue(":limit", $obj->limit);
+    $query->execute();
+    $outp = $query->fetchAll(PDO::FETCH_ASSOC);
+    return json_encode($outp);
+  }
+
+  public function saveMeasurement($data){
+      $idDevice = $data->idDevice;
+      $temperature = $data->temperature;
+      $humidity = $data->humidity;
+      $soil_humidity_1 = $data->soil_humidity_1;
+
+      $consulta = $this->dataBase->prepare("insert into measurements values (null, :id_device, :temperature, :humidity, :soil_humidity_1, default)");
+      $consulta->bindValue(':id_device',$idDevice,PDO::PARAM_INT);
+      $consulta->bindValue(':temperature',$temperature ,PDO::PARAM_INT);
+      $consulta->bindValue(':humidity',$humidity ,PDO::PARAM_INT);
+      $consulta->bindValue(':soil_humidity_1',$soil_humidity_1 ,PDO::PARAM_INT);
+      $consulta->execute();
+
   }
 }
 

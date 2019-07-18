@@ -7,6 +7,6 @@ include_once("clases/dbjson.php");
 
 $authentication = new Auth();
 $validator = new Validator();
-$db = new DBMySQL();
+$db = new DBMySQL("credenciales.json");
 
 ?>

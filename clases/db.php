@@ -2,7 +2,7 @@
 
 abstract class DB {
   public abstract function crearUsuario(Usuario $usuario);
-  public abstract function traerUsuarios();
+  public abstract function getUsers();
   public abstract function buscarPorID($id);
   public abstract function buscarPorEmail($email);
 

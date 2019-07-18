@@ -1,12 +1,12 @@
 <?php
 
-include_once("clases/db.php");
+include_once("db.php");
 
 class DBJSON extends DB {
   public function crearUsuario(Usuario $usuario) {
 
   }
-  public function traerUsuarios() {
+  public function getUsers() {
 
   }
   public function buscarPorID($id) {

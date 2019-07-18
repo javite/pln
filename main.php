@@ -1,3 +1,13 @@
+<?php
+require_once("init.php");
+$temperature = "";
+$humidity = "";
+$measurement = $db->getLastMeasurement(1);
+
+// var_dump($measurement); exit;
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,10 +38,10 @@
         </div>
         <div class="card-deck">
                 <div class="card bg-light mb-3 text-center">
-                    <h5 class="card-header">Temperatura Interna</h5>
+                    <h5 class="card-header">Temp. Interna</h5>
                     <div class="card-body">
                         <!-- <p class="card-title">Interna</p> -->
-                        <h1 class="card-text">25º</h1>
+                        <h1 class="card-text"><?=$measurement["temperature"]?>º</h1>
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                     <div class="card-footer">
@@ -43,7 +53,7 @@
                     <h5 class="card-header">Humedad Interna</h5>
                     <div class="card-body">
                         <!-- <h5 class="card-title">Humedad interna</h5> -->
-                        <h1 class="card-text">60%</h1>
+                        <h1 class="card-text"><?=$measurement["humidity"]?>%</h1>
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                     <div class="card-footer">

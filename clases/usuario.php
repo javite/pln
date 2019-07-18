@@ -1,6 +1,6 @@
 <?php
 
-include_once("clases/model.php");
+include_once("model.php");
 
 class Usuario extends Model {
   protected $table = "users";
