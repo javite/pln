@@ -4,6 +4,7 @@
 
 body {
     font-family: 'Quicksand', sans-serif;
+ 
 }
 
 header {
@@ -11,33 +12,45 @@ header {
 }
 
 .fondo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    background-image: url("../images/fondo4.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     background-color: #11121e;
-    height: 780px;
-
+    text-align: center;
+}
+.width{
+    /* display: flex; */
+    /* flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    height: 1000px;
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
 }
 
-img {
-    /* width: 100%; */
-    /* min-width: 750px; */
+
+
+.imagen-fondo {
+    width: 100%; 
+    min-width: 750px;
     width: 20%;
     height: auto;
-    /* opacity: 0.9; */
-    /* -webkit-filter: blur(1px);
-    filter: blur(1px); */
+    opacity: 0.9;
+   -webkit-filter: blur(1px);
+    filter: blur(1px);
     display: block;
 }
 
 .contenedor-fecha {
-    position: absolute;
+    /* position: absolute; */
     width: 80%;
     max-width: 600px;
-    top: 30px;
-    left: 50%;
-    transform: translate(-50%, 0%);
+    /* top: 30px;
+    left: 50%; */
+    /* transform: translate(-50%, 0%); */
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
@@ -45,8 +58,19 @@ img {
     background-color: rgba(136, 133, 173, 0.21);
     border-radius: 15px;
     padding: 5px;
+    margin: 50px auto;
+    
+}
+.contenedor-logo {
+    width: 100%;
+    margin-top:50px;
 }
 
+img.logo{
+    height: 200px;
+    display: block;
+    /* margin: 0 auto; */
+}
 .hora {
     color: rgba(255, 255, 255, 0.9);
     font-size: 50px;
@@ -64,14 +88,13 @@ img {
 }
 
 .contenedor-usuario {
-    position: absolute;
-    bottom: 15%;
-    right: 1%;
-    transform: translate(-15%, -50%);
-    border: 1px solid rgba(200, 200, 200, 0.8);
+   border: 1px solid rgba(200, 200, 200, 0.8);
     padding: 5px 15px;
     border-radius: 5px;
     display: flex;
+    width: fit-content;
+    margin: 50px auto;
+    /* margin-top:50px; */
 }
 
 .usuario {
@@ -91,13 +114,11 @@ img {
 }
 
 
-@media (max-width: 700px) {
-    .contenedor-usuario {
-        bottom: 85%;
-        right: 1%;
-        transform: translate(-5%, -50%);
+@media (max-width: 600px) {
+    .width {
+        width: 100%;
     }
-    .contenedor-fecha {
+    /* .contenedor-fecha {
         top: 70%;
-    }
+    } */
 }

@@ -57,18 +57,21 @@ if($authentication->isLogged()){
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
 </head>
 <body>
+    <!-- <img class="imagen-fondo" src="images/fondo4.jpg" alt=""> -->
     <div class="fondo">
-            <!-- <img src="images/fondo4.jpg" alt=""> -->
-            <img src="images/logo_grower-lab.svg" alt="">
-            <div class="contenedor-usuario">
-                <i class="material-icons">account_circle</i>
-                <a class="usuario" href="login.php"><?=$nombreUsuario?></a>
-            </div>
+        <div class="width">
+                <div class="contenedor-usuario">
+                    <i class="material-icons">account_circle</i>
+                    <a class="usuario" href="login.php"><?=$nombreUsuario?></a>
+                </div>
             <div class= "contenedor-fecha">
                 <p class="hora"><?=$hora?></p>
                 <p class="fecha"><?=$date?></p>
             </div>
-          
+            <div class="contenedor-logo">
+                <img class="logo" src="images/logo_grower-lab.svg" alt="">
+            </div>
+         </div>  
     </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
