@@ -59,7 +59,7 @@ class DBMySQL extends DB {
   }
 
   function buscarPorID($id) {
-    $consulta = $this->dataBase->prepare("SELECT * FROM usuarios where id = :id");
+    $consulta = $this->dataBase->prepare("SELECT * FROM users where id = :id");
     $consulta->bindValue(":id", $id);
     $consulta->execute();
     $usuarioArray = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -78,7 +78,7 @@ class DBMySQL extends DB {
   }
 
   public function generalQuery(Object $obj) {
-    $query = $this->dataBase->prepare("SELECT * FROM $obj->table LIMIT $obj->limit");
+    $query = $this->dataBase->prepare("SELECT * FROM $obj->table where device_id=$obj->device_id ORDER BY ID DESC LIMIT $obj->limit");
     // $query->bindValue(":table", $obj->table);
     // $query->bindValue(":limit", $obj->limit);
     $query->execute();

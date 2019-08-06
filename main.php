@@ -4,6 +4,7 @@ $temperature = "";
 $humidity = "";
 $measurement = $db->getLastMeasurement(1);
 
+
 // var_dump($measurement); exit;
 ?>
 
@@ -20,10 +21,16 @@ $measurement = $db->getLastMeasurement(1);
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
+    <script src="js/Chart.js"></script>
+   
 </head>
-<body>
+<body onload="loadData()">
     <div class="background-image"></div>
     <div class="container">
+        <div class="contenedor-usuario">
+            <i class="material-icons">account_circle</i>
+            <a class="usuario" href="logout.php">logout</a>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class= "card contenedor-fecha text-center mb-5 mt-3">
@@ -32,10 +39,7 @@ $measurement = $db->getLastMeasurement(1);
                 </div>
             </div>
         </div>
-        <div class="contenedor-usuario">
-            <i class="material-icons">account_circle</i>
-            <a class="usuario" href="logout.php">logout</a>
-        </div>
+ 
         <div class="card-deck">
                 <div class="card bg-light mb-3 text-center">
                     <h5 class="card-header">Temp. Interna</h5>
@@ -45,7 +49,7 @@ $measurement = $db->getLastMeasurement(1);
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
+                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
                     </div>
                 </div>
 
@@ -57,19 +61,33 @@ $measurement = $db->getLastMeasurement(1);
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
+                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
                     </div>
                 </div>
 
                 <div class="card bg-light mb-3 text-center">
-                    <h5 class="card-header">Fecha</h5>
+                    <h5 class="card-header">Humedad de tierra</h5>
                     <div class="card-body">
                         <!-- <h5 class="card-title">Humedad interna</h5> -->
-                        <h1 class="card-text">08/10/18</h1>
+                        <h1 class="card-text"><?=$measurement["soil_humidity_1"]?>%</h1>
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
+                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
+                    </div>
+                </div>
+                <div class="card bg-light mb-3 text-center">
+                    <h5 class="card-header">Historial de Temperatura</h5>
+                    <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="myLineChart"></canvas>
+                        <script src="js/line.js"></script>
+                        <!-- <br>
+                        <button type="button" class="btn btn-default" onclick="updateDataChar()">Actualizar</button> -->
+                    </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
                     </div>
                 </div>
         </div>
