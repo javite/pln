@@ -21,7 +21,8 @@ $measurement = $db->getLastMeasurement(1);
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
-    <script src="js/Chart.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/chart.js"></script>
    
 </head>
 <body onload="loadData()">
@@ -76,21 +77,25 @@ $measurement = $db->getLastMeasurement(1);
                         <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
                     </div>
                 </div>
-                <div class="card bg-light mb-3 text-center">
-                    <h5 class="card-header">Historial de Temperatura</h5>
-                    <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="myLineChart"></canvas>
-                        <script src="js/line.js"></script>
-                        <!-- <br>
-                        <button type="button" class="btn btn-default" onclick="updateDataChar()">Actualizar</button> -->
-                    </div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
-                    </div>
-                </div>
         </div>
+        
+            <div class="container">
+                    <!-- <div class="card bg-light  text-center"> -->
+                        <h5 class="card-header">Historial de Temperatura y Humedad ambiente</h5>
+                        <!-- <div class="card-body"> -->
+                        <div class="chart-container">
+                            <canvas id="myLineChart"></canvas>
+                            <script src="js/line.js"></script>
+                            <!-- <br>
+                            <button type="button" class="btn btn-default" onclick="updateDataChar()">Actualizar</button> -->
+                        </div>
+                        <!-- </div> -->
+                        <div class="card-footer">
+                            <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
+                        </div>
+                    <!-- </div> -->
+            </div>
+        
 
         <div class="card-deck">
             <div class="card  text-success bg-dark mb-3 text-center">

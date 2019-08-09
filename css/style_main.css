@@ -96,7 +96,15 @@ img.planta{
     border-radius: 5px;
     display: flex;
 }
+.container div.container{
+    background-color: aliceblue;
+}
 
+.chart-container{
+    margin-top: 20px;
+    width: 100%;
+    margin-bottom: 40px;
+}
 .usuario {
     color: white;
     font-size: 15px;
