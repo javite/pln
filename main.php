@@ -4,10 +4,7 @@ $temperature = "";
 $humidity = "";
 $measurement = $db->getLastMeasurement(1);
 
-
-// var_dump($measurement); exit;
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -19,10 +16,14 @@ $measurement = $db->getLastMeasurement(1);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="libraries/chartist.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
     <script src="js/moment.js"></script>
     <script src="js/chart.js"></script>
+    <script src="js/test.js"></script>
+    <!-- <script src="libraries/chartist.min.js"></script> -->
    
 </head>
 <body onload="loadData()">
@@ -79,24 +80,31 @@ $measurement = $db->getLastMeasurement(1);
                 </div>
         </div>
         
-            <div class="container">
-                    <!-- <div class="card bg-light  text-center"> -->
-                        <h5 class="card-header">Historial de Temperatura y Humedad ambiente</h5>
-                        <!-- <div class="card-body"> -->
-                        <div class="chart-container">
-                            <canvas id="myLineChart"></canvas>
-                            <script src="js/line.js"></script>
-                            <!-- <br>
-                            <button type="button" class="btn btn-default" onclick="updateDataChar()">Actualizar</button> -->
+        <div class="card-deck ">
+        <div class="card bg-light mb-3 text-center">
+            <h5 class="card-header" id="titulo">Historial de Temperatura y Humedad ambiente</h5>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="myLineChart"></canvas>
+                    <script src="js/line.js"></script>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="input-group col-md-6">
+                            <!-- <label for="date_chart1" class="text">Fecha</label> -->
+                            <input type="date" class="form-control" id="date_chart1" >
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" onclick="updateDataChar()">Actualizar</button>
+                            </div>
                         </div>
-                        <!-- </div> -->
-                        <div class="card-footer">
-                            <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
-                        </div>
-                    <!-- </div> -->
+                    </div>
+                </div>
             </div>
-        
-
+            <div class="card-footer">
+                <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
+            </div>
+        </div>
+        </div>
         <div class="card-deck">
             <div class="card  text-success bg-dark mb-3 text-center">
                 <h5 class="card-header">Iluminación</h5>
@@ -138,19 +146,20 @@ $measurement = $db->getLastMeasurement(1);
             </div>
         </div>
 
-            <!-- <div class="circulo-gradiente"> -->
-                <!-- <div class="circulo-principal">
-                    <div class="texto-circulo">
-                        <img class="planta" src="images/planta.png" alt="planta">
-                        <p class="estado" >3 semanas</p>
-                        <p class="estado" >4 días</p>
-                    </div>
+            <!-- <div class="circulo-gradiente">
+            <div class="circulo-principal">
+                <div class="texto-circulo">
+                    <img class="planta" src="images/planta.png" alt="planta">
+                    <p class="estado" >3 semanas</p>
+                    <p class="estado" >4 días</p>
                 </div>
+            </div>
             </div> -->
             
     </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </body>
 </html>

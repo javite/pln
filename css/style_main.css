@@ -111,6 +111,10 @@ img.planta{
     text-decoration: none;
     padding-left: 5px;
 }
+
+.chart{
+    background-color: white;
+}
 /* @media (max-width:700px) {
     img {
         height: 600px;

@@ -1,7 +1,7 @@
 
 var ctx_line = document.getElementById("myLineChart").getContext('2d');
 var data_line = [0, 0, 0, 0];
-// var data_line2 = [0, 0, 0, 0];
+var data_line2 = [0, 0, 0, 0];
    
 var myLineChart = new Chart(ctx_line, {
     type: 'line',
@@ -17,7 +17,6 @@ var myLineChart = new Chart(ctx_line, {
             borderColor: [
                 'rgba(103,195,255,1)'
             ],
-            data:[],
             borderWidth: 3,
             fill: false,
             pointRadius: 1,
@@ -31,14 +30,13 @@ var myLineChart = new Chart(ctx_line, {
         {
             label: 'Humedad',
             type: 'line',
-            data: data_line,
+            data: data_line2,
             backgroundColor: [
                 'rgba(153, 100, 100, 0.6)'
             ],
             borderColor: [
                 'rgba(153,100,100,1)'
             ],
-            data:[],
             borderWidth: 3,
             fill: false,
             pointRadius: 1,
@@ -119,29 +117,29 @@ var myLineChart = new Chart(ctx_line, {
 function updateDataChar() {
     var xhttp, res;
     xhttp = new XMLHttpRequest();
-    var json_string = '{"table":"measurements", "limit":"100","device_id":1}';
+    var date_chart = $("#date_chart1").val();
+    var json_string = '{"table":"measurements", "limit":"5","device_id":1, "date":"'+date_chart+' 00:00:00"}';
+    console.log(json_string);
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
             res = JSON.parse(this.responseText);
             res.forEach(function (data, index) {
-                var date = new Date(data.created_at);
-                // console.log(date);
-                myLineChart.data.labels[index] = date.toISOString(); //toISOString
+                //var date = new Date(data.created_at);
+                myLineChart.data.labels[index] = data.created_at //toISOString
                 myLineChart.data.datasets[0].data[index] = data.temperature;
-                myLineChart.data.datasets[1].data[index] = data.humidity;
+                myLineChart.data.datasets[1].data[index] = data.humidity;S
                 //console.log(myLineChart.data.datasets[0].data[index]);
                 //console.log(myLineChart.data.datasets[1].data[index]);
-                //console.log(date.toISOString());
-                //console.log(date.toTimeString());
                 // myLineChart.data.datasets[1].data[index] = data.nok;
                 // console.log(data.ok + "|" + data.nok);
             });
             myLineChart.update();
         }
     };
-    xhttp.open("GET", "http://localhost/backend/api/querys.php?x="+json_string, true);//grower-lab.com
+    xhttp.open("GET", "http://192.168.1.4/backend/api/querys.php?x="+json_string, true);//grower-lab.com
     xhttp.send();
-    console.log(moment().add(1,'d').toDate());
+    
 }
 
 function loadData() {

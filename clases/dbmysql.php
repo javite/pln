@@ -78,7 +78,9 @@ class DBMySQL extends DB {
   }
 
   public function generalQuery(Object $obj) {
-    $query = $this->dataBase->prepare("SELECT * FROM $obj->table where device_id=$obj->device_id ORDER BY ID DESC LIMIT $obj->limit");
+    $today = date('Y-m-d',$obj->date);
+    var_dump($today);exit;
+    $query = $this->dataBase->prepare("SELECT * FROM $obj->table where device_id=$obj->device_id AND created_at=$obj->date ORDER BY ID DESC LIMIT $obj->limit");
     // $query->bindValue(":table", $obj->table);
     // $query->bindValue(":limit", $obj->limit);
     $query->execute();
