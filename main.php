@@ -94,7 +94,7 @@ $measurement = $db->getLastMeasurement(1);
                             <!-- <label for="date_chart1" class="text">Fecha</label> -->
                             <input type="date" class="form-control" id="date_chart_temp_hum" >
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" onclick="updateDataChar()">Actualizar</button>
+                                <button class="btn btn-primary" type="button" onclick="loadData()">Actualizar</button>
                             </div>
                             
                             <div class="alert alert-warning" id="alerta" role="alert">
