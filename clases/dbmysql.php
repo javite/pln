@@ -78,9 +78,12 @@ class DBMySQL extends DB {
   }
 
   public function generalQuery(Object $obj) {
-    $today = date('Y-m-d',$obj->date);
-    var_dump($today);exit;
-    $query = $this->dataBase->prepare("SELECT * FROM $obj->table where device_id=$obj->device_id AND created_at=$obj->date ORDER BY ID DESC LIMIT $obj->limit");
+    $date_selected = strtotime($obj->date);
+    $date_plus_1 = strtotime("+1 day", $date_selected);
+    $today = date('Y-m-d H:i:s',$date_selected);
+    $tomorrow = date('Y-m-d H:i:s',$date_plus_1);
+    $query = $this->dataBase->prepare("SELECT * FROM $obj->table where device_id=$obj->device_id AND created_at BETWEEN '$today' AND '$tomorrow' ORDER BY ID DESC ");//LIMIT $obj->limit
+    // var_dump($query);
     // $query->bindValue(":table", $obj->table);
     // $query->bindValue(":limit", $obj->limit);
     $query->execute();

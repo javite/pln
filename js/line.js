@@ -50,7 +50,7 @@ var myLineChart = new Chart(ctx_line, {
         }]
     },
     options: {
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         responsive: true,
         responsiveAnimationDuration: 400,
         cutoutPercentage: 50,
@@ -117,24 +117,24 @@ var myLineChart = new Chart(ctx_line, {
 function updateDataChar() {
     var xhttp, res;
     xhttp = new XMLHttpRequest();
-    var date_chart = $("#date_chart1").val();
-    var json_string = '{"table":"measurements", "limit":"5","device_id":1, "date":"'+date_chart+' 00:00:00"}';
-    console.log(json_string);
+    var date_chart = $("#date_chart_temp_hum").val();
+    var json_string = '{"table":"measurements", "limit":"50","device_id":1, "date":"'+date_chart+' 00:00:00"}';
+    console.log("json_get: "+json_string);
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-            res = JSON.parse(this.responseText);
-            res.forEach(function (data, index) {
-                //var date = new Date(data.created_at);
-                myLineChart.data.labels[index] = data.created_at //toISOString
-                myLineChart.data.datasets[0].data[index] = data.temperature;
-                myLineChart.data.datasets[1].data[index] = data.humidity;S
-                //console.log(myLineChart.data.datasets[0].data[index]);
-                //console.log(myLineChart.data.datasets[1].data[index]);
-                // myLineChart.data.datasets[1].data[index] = data.nok;
-                // console.log(data.ok + "|" + data.nok);
-            });
-            myLineChart.update();
+            if (this.responseText.length == 2){
+               $("#alerta").show();
+            }
+            else {
+                $("#alerta").hide();
+                res = JSON.parse(this.responseText);
+                res.forEach(function (data, index) {
+                    myLineChart.data.labels[index] = data.created_at;
+                    myLineChart.data.datasets[0].data[index] = data.temperature;
+                    myLineChart.data.datasets[1].data[index] = data.humidity;
+                });
+                myLineChart.update();
+            }
         }
     };
     xhttp.open("GET", "http://192.168.1.4/backend/api/querys.php?x="+json_string, true);//grower-lab.com

@@ -92,10 +92,15 @@ $measurement = $db->getLastMeasurement(1);
                     <div class="row justify-content-md-center">
                         <div class="input-group col-md-6">
                             <!-- <label for="date_chart1" class="text">Fecha</label> -->
-                            <input type="date" class="form-control" id="date_chart1" >
+                            <input type="date" class="form-control" id="date_chart_temp_hum" >
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button" onclick="updateDataChar()">Actualizar</button>
                             </div>
+                            
+                            <div class="alert alert-warning" id="alerta" role="alert">
+                                <strong>UPS! </strong> No hay datos el dia seleccionado.
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -145,17 +150,6 @@ $measurement = $db->getLastMeasurement(1);
                 </div> -->
             </div>
         </div>
-
-            <!-- <div class="circulo-gradiente">
-            <div class="circulo-principal">
-                <div class="texto-circulo">
-                    <img class="planta" src="images/planta.png" alt="planta">
-                    <p class="estado" >3 semanas</p>
-                    <p class="estado" >4 días</p>
-                </div>
-            </div>
-            </div> -->
-            
     </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

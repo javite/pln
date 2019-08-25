@@ -38,7 +38,6 @@ h1, h3, h5{
 }
 
 img.img-fondo {
-    /* width: 100%; */
     min-width: 750px;
     height: auto;
     -webkit-filter: blur(3px);
@@ -48,6 +47,10 @@ img.img-fondo {
 
 img.planta{
     width: 60px;
+}
+
+canvas{
+    height: 400px;
 }
 
 .circulo-gradiente{
@@ -60,7 +63,9 @@ img.planta{
     display: inline-block;
     background: rgb(26, 105, 209);
     /* background: linear-gradient(yellow, rgb(196, 32, 211),#00b8ff); */
+
 }
+
 .circulo-principal {
     width: 200px; 
     height: 200px; 
@@ -68,6 +73,7 @@ img.planta{
     border-radius: 50%; 
     
 }
+
 .texto-circulo{
     position: absolute;
     top:50%;
@@ -77,6 +83,7 @@ img.planta{
     width: 100%;
     text-align: center;
 }
+
 .estado {
     color: rgb(73, 161, 61);
     font-size: 17px;
@@ -84,6 +91,7 @@ img.planta{
     width: 100%;
     text-align: center;
 }
+
 .contenedor-usuario {
     position: relative;
     color: white;
@@ -96,15 +104,17 @@ img.planta{
     border-radius: 5px;
     display: flex;
 }
+
 .container div.container{
     background-color: aliceblue;
 }
 
 .chart-container{
-    margin-top: 20px;
+    margin: auto;
     width: 100%;
-    margin-bottom: 40px;
+    height: 60vw;
 }
+
 .usuario {
     color: white;
     font-size: 15px;
@@ -115,8 +125,3 @@ img.planta{
 .chart{
     background-color: white;
 }
-/* @media (max-width:700px) {
-    img {
-        height: 600px;
-    }
-} */
