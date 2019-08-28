@@ -60,16 +60,20 @@ if($authentication->isLogged()){
     <!-- <img class="imagen-fondo" src="images/fondo4.jpg" alt=""> -->
     <div class="fondo">
         <div class="width">
+            <div class="cont-date">
+                <div class= "contenedor-fecha">
+                    <p class="hora"><?=$hora?></p>
+                    <p class="fecha"><?=$date?></p>
+                </div>
+            </div>
+            <div class="contenedor-logo">
+                <img class="logo" src="images/logo_grower-lab.svg" alt="">
+            </div>
+            <div class="cont-user">
                 <div class="contenedor-usuario">
                     <i class="material-icons">account_circle</i>
                     <a class="usuario" href="login.php"><?=$nombreUsuario?></a>
                 </div>
-            <div class= "contenedor-fecha">
-                <p class="hora"><?=$hora?></p>
-                <p class="fecha"><?=$date?></p>
-            </div>
-            <div class="contenedor-logo">
-                <img class="logo" src="images/logo_grower-lab.svg" alt="">
             </div>
          </div>  
     </div>
