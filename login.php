@@ -48,7 +48,7 @@ if ($_POST) {
 <body id="LoginForm">
     <div class="fondo">
         <img src="images/logo_grower-lab.svg" alt="">
-        <div class="login-form">
+        <div class="login-div">
             <div class="main-div">
                 <div class="panel">
                     <h2>Logueate</h2>
@@ -61,13 +61,15 @@ if ($_POST) {
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>><span class="error"><?=$mensajeContrasena?></span>
                     </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="remember-me" class="form-control" value=""> Recordame
+                    <div class="custom-control custom-checkbox">
+                    <!-- form-group form-check form-check-input-->
+                        <input type="checkbox" class="custom-control-input" id="exampleCheck1" name="remember-me"> 
+                        <label class="custom-control-label" for="exampleCheck1">Recordame</label>
                     </div>
                     <div class="forgot">
                         <a href="registracion.php">¿Olvidaste tu contraseña?</a>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary">Loguearse</button>
                 </form>
             </div>
         </div>

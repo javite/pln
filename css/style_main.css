@@ -19,7 +19,27 @@
     -ms-filter: blur(5px);
     filter: blur(5px); */
   }
+  /* .footer {
+    background-color: #f5f5f5;
+  } */
+.logo-svg{
+    width:auto;
+    height:50px;
+    filter: invert(1);
+}
+.name-grower{
+    margin-left: 15px;
+}
+.sticky{
 
+}
+.footer{
+    background-color: #c7c7ce;
+    height: 45px;
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+}
 .lamp{
     height: 80px;
 }

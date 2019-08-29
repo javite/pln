@@ -27,21 +27,19 @@ $measurement = $db->getLastMeasurement(1);
    
 </head>
 <body onload="loadData()">
-    <div class="background-image"></div>
+    <div class="background-image">
+    </div>
     <div class="container">
-        <div class="contenedor-usuario">
-            <i class="material-icons">account_circle</i>
-            <a class="usuario" href="logout.php">logout</a>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class= "card contenedor-fecha text-center mb-5 mt-3">
-                    <p class="texto">Especie: White widow</p>
-                    <p class="texto">7 semanas y 4 días</p>
-                </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="images/isologo_grower-lab.svg" class="logo-svg d-inline-block align-center"  alt="" ><span class="navbar-brand name-grower">  GROWER-LAB</span>
+            </a>
+            <div class="contenedor-usuario">
+                <i class="material-icons">account_circle</i>
+                <a class="usuario" href="logout.php">logout</a>
             </div>
-        </div>
- 
+        </nav>
+
         <div class="card-deck">
                 <div class="card bg-light mb-3 text-center">
                     <h5 class="card-header">Temp. Interna</h5>
@@ -79,36 +77,35 @@ $measurement = $db->getLastMeasurement(1);
                     </div>
                 </div>
         </div>
-        
         <div class="card-deck ">
-        <div class="card bg-light mb-3 text-center">
-            <h5 class="card-header" id="titulo">Historial de Temperatura y Humedad ambiente</h5>
-            <div class="card-body">
-                <div class="chart-container">
-                    <canvas id="myLineChart"></canvas>
-                    <script src="js/line.js"></script>
-                </div>
-                <div class="container">
-                    <div class="row justify-content-md-center">
-                        <div class="input-group col-md-6">
-                            <!-- <label for="date_chart1" class="text">Fecha</label> -->
-                            <input type="date" class="form-control" id="date_chart_temp_hum" >
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" onclick="loadData()">Actualizar</button>
-                            </div>
-                            
-                            <div class="alert alert-warning" id="alerta" role="alert">
-                                <strong>UPS! </strong> No hay datos el dia seleccionado.
-                            </div>
+            <div class="card bg-light mb-3 text-center">
+                <h5 class="card-header" id="titulo">Historial de Temperatura y Humedad ambiente</h5>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="myLineChart"></canvas>
+                        <script src="js/line.js"></script>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="input-group col-md-6">
+                                <!-- <label for="date_chart1" class="text">Fecha</label> -->
+                                <input type="date" class="form-control" id="date_chart_temp_hum" >
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" onclick="loadData()">Actualizar</button>
+                                </div>
+                                
+                                <div class="alert alert-warning" id="alerta" role="alert">
+                                    <strong>UPS! </strong> No hay datos el dia seleccionado.
+                                </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
+                </div>
             </div>
-            <div class="card-footer">
-                <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
-            </div>
-        </div>
         </div>
         <div class="card-deck">
             <div class="card  text-success bg-dark mb-3 text-center">
@@ -151,6 +148,13 @@ $measurement = $db->getLastMeasurement(1);
             </div>
         </div>
     </div>
+    <footer class="footer mt-auto py-3 sticky">
+        <div class="container">
+            <span class="text-muted">
+              <div class=""></div>
+            </span>
+        </div>
+    </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
