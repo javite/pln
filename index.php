@@ -52,19 +52,34 @@ if($authentication->isLogged()){
     <title>GROWER-LAB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="theme-color" content="#F0DB4F">
+    <!-- <meta name="theme-color" content="#F0DB4F"> -->
     <meta name="MobileOptimized" content="width">
     <meta name="HandheldFriendly" content="true">
 
     <!-- PWA config -->
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="images/logo_grower-lab.svg">
+    <!-- iconos  -->
+    <link rel="apple-touch-icon" href="images/icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/grower-lab_180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="images/grower-lab_167x167.png">
+	<!-- titulo icono -->
+    <meta name="apple-mobile-web-app-title" content="Grower-lab">
+    <!-- standalone -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar" content="#2B2B2B">
-    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
-
-    <link rel="shortcut icon" type="image/png" href="images/logo_grower-lab.svg">
-    <link rel="apple-touch-startup-image" href="images/logo_grower-lab.svg">
+    <!-- bar color  -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- splash  -->
+    <link href="images/splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="images/splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -84,7 +99,7 @@ if($authentication->isLogged()){
                 </div>
             </div>
             <div class="contenedor-logo">
-                <img class="logo" src="images/logo_grower-lab.svg" alt="">
+                <img class="logo" src="images/logo_grower-lab_white.svg" alt="">
             </div>
             <div class="cont-user">
                 <div class="contenedor-usuario">

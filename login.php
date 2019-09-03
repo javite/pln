@@ -45,9 +45,8 @@ if ($_POST) {
     <!-- <script src="main.js"></script> -->
 </head>
 
-<body id="LoginForm">
+<body>
     <div class="fondo">
-        <img src="images/logo_grower-lab.svg" alt="">
         <div class="login-div">
             <div class="main-div">
                 <div class="panel">
@@ -62,18 +61,19 @@ if ($_POST) {
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>><span class="error"><?=$mensajeContrasena?></span>
                     </div>
                     <div class="custom-control custom-checkbox">
-                    <!-- form-group form-check form-check-input-->
                         <input type="checkbox" class="custom-control-input" id="exampleCheck1" name="remember-me"> 
                         <label class="custom-control-label" for="exampleCheck1">Recordame</label>
                     </div>
                     <div class="forgot">
                         <a href="registracion.php">¿Olvidaste tu contraseña?</a>
                     </div>
-                    <button type="submit" class="btn btn-primary">Loguearse</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
             </div>
         </div>
     </div>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
