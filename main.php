@@ -46,7 +46,7 @@ $measurement = $db->getLastMeasurement(1);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
 
@@ -62,22 +62,27 @@ $measurement = $db->getLastMeasurement(1);
   
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-            <a class="navbar-brand" href="#">
+            <!-- <a class="navbar-brand" href="#">
                 <img src="images/isologo_grower-lab.svg" class="logo-svg d-inline-block align-center"  alt="" >
-                <!-- <span class="navbar-brand name-grower">  GROWER-LAB</span> -->
-            </a>
+            </a> -->
+            <div class="w-5"></div>
+            <span class="name-grower">grower-lab</span>
             <div class="contenedor-usuario">
-                <i class="material-icons">account_circle</i>
-                <a class="usuario" href="logout.php">salir</a>
+                <a class="usuario" href="logout.php">
+                    <i class="material-icons user-icon">account_circle</i>
+                </a>
             </div>
             </div>
         </nav>
         <div class="container">
         <div class="card-deck">
                 <div class="card bg-light mb-3 text-center">
-                    <h5 class="card-header">Temp. Interna</h5>
+                    <!-- <h5 class="card-header">Temp. Interna</h5> -->
                     <div class="card-body">
-                        <!-- <p class="card-title">Interna</p> -->
+                        <div class="cont-text">
+                            <h5 class="">Temperatura</h5>
+                            <p class="">Interna</p>
+                        </div>
                         <h1 class="card-text"><?=$measurement["temperature"]?>º</h1>
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
@@ -180,14 +185,22 @@ $measurement = $db->getLastMeasurement(1);
             </div>
         </div>
     </div>
-    <footer class="footer mt-auto py-3 sticky">
-        <div class="container">
-            <span class="text-muted">
-              <div class=""></div>
-            </span>
+    <footer class="footer container-fluid">
+        <div class="container  d-flex justify-content-around">
+            <a class="ref_menu" href="#">
+                <img src="images/isologo_grower-lab.svg" class="icon_menu"alt="">
+            </a>
+            <a class="ref_menu" href="#">
+                <img src="images/calendar.svg" class="icon_menu"alt="">
+            </a>
+            <a class="ref_menu" href="#">
+                <img src="images/settings.svg" class="icon_menu"alt="">
+            </a>
         </div>
     </footer>
     
+    
+
 <script src="/js/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

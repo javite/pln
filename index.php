@@ -90,7 +90,7 @@ if($authentication->isLogged()){
 </head>
 <body>
     <!-- <img class="imagen-fondo" src="images/fondo4.jpg" alt=""> -->
-    <div class="fondo">
+    <div class="fondo vw-100">
         <div class="width">
             <div class="cont-date">
                 <div class= "contenedor-fecha">
