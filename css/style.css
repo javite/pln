@@ -21,7 +21,7 @@ header {
 }
 
 .width{
-    height: 1000px;
+    height: 100vh;
     width: 600px;
     margin: 0 auto;
     text-align: center;
