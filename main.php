@@ -12,14 +12,14 @@ $measurement = $db->getLastMeasurement(1);
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
    
-    <title>GROWER-LAB</title>
+    <title>Grower-lab</title>
 
     <!-- <meta name="theme-color" content="#F0DB4F"> -->
     <meta name="MobileOptimized" content="width">
     <meta name="HandheldFriendly" content="true">
 
-  <!-- PWA config -->
-  <link rel="manifest" href="manifest.json">
+    <!-- PWA config -->
+    <link rel="manifest" href="manifest.json">
     <!-- iconos  -->
     <link rel="apple-touch-icon" href="images/icon.png">
     <link rel="apple-touch-icon" sizes="152x152" href="images/icon.png">
@@ -47,8 +47,8 @@ $measurement = $db->getLastMeasurement(1);
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
 
     <script src="js/moment.js"></script>
     <script src="js/chart.js"></script>
@@ -56,151 +56,157 @@ $measurement = $db->getLastMeasurement(1);
    
 </head>
 <body onload="loadData()">
-    <div class="background-image">
-    </div>
-
-  
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-            <!-- <a class="navbar-brand" href="#">
-                <img src="images/isologo_grower-lab.svg" class="logo-svg d-inline-block align-center"  alt="" >
-            </a> -->
+    <div class="background-image"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
             <div class="w-5"></div>
-            <span class="name-grower">grower-lab</span>
+            
+            <span id="name-grower">
+            <img src="images/isologo_grower-lab_thin.svg" class="logo-svg"  alt="" >
+            grower-lab</span>
+
             <div class="contenedor-usuario">
                 <a class="usuario" href="logout.php">
                     <i class="material-icons user-icon">account_circle</i>
                 </a>
             </div>
-            </div>
-        </nav>
-        <div class="container">
-        <div class="card-deck">
-                <div class="card bg-light mb-3 text-center">
-                    <!-- <h5 class="card-header">Temp. Interna</h5> -->
-                    <div class="card-body">
-                        <div class="cont-text">
-                            <h5 class="">Temperatura</h5>
-                            <p class="">Interna</p>
-                        </div>
-                        <h1 class="card-text"><?=$measurement["temperature"]?>º</h1>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
-                    </div>
-                </div>
-
-                <div class="card bg-light mb-3 text-center">
-                    <h5 class="card-header">Humedad Interna</h5>
-                    <div class="card-body">
-                        <!-- <h5 class="card-title">Humedad interna</h5> -->
-                        <h1 class="card-text"><?=$measurement["humidity"]?>%</h1>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
-                    </div>
-                </div>
-
-                <div class="card bg-light mb-3 text-center">
-                    <h5 class="card-header">Humedad de tierra</h5>
-                    <div class="card-body">
-                        <!-- <h5 class="card-title">Humedad interna</h5> -->
-                        <h1 class="card-text"><?=$measurement["soil_humidity_1"]?>%</h1>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
-                    </div>
-                </div>
         </div>
-        <div class="card-deck ">
-            <div class="card bg-light mb-3 text-center">
-                <h5 class="card-header" id="titulo">Historial de Temperatura y Humedad ambiente</h5>
-                <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="myLineChart"></canvas>
-                        <script src="js/line.js"></script>
-                    </div>
-                    <div class="container">
-                        <div class="row justify-content-md-center">
-                            <div class="input-group col-md-6">
-                                <!-- <label for="date_chart1" class="text">Fecha</label> -->
-                                <input type="date" class="form-control" id="date_chart_temp_hum" >
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" onclick="loadData()">Actualizar</button>
-                                </div>
-                                <div class="alert alert-warning" id="alerta" role="alert">
-                                    <strong>UPS! </strong> No hay datos el dia seleccionado.
-                                </div>
-
+    </nav>
+        <div class="container-1">
+            <div class="card-deck">
+                <div class="card bg-light mb-0 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h3 class="text-left">Temperatura</h3>
+                                <h5 class="text-left">ambiente</h5>
+                            </div>
+                            <div class="card-value col-5">
+                                <h1 class="card-text"><?=$measurement["temperature"]?>ºC</h1>
+                                <img src="images/thermometer.svg" id="img-temp"alt="">
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <small class="text-muted text-left">Actualizado: <?=$measurement["created_at"]?></small>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
+                <div class="card bg-light mb-0 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h3 class="text-left">Humedad</h3>
+                                <h5 class="text-left">ambiente</h5>
+                            </div>
+                            <div class="card-value col-5">
+                                <h1 class="card-text"><?=$measurement["humidity"]?>%</h1>
+                                <img src="images/drop.svg" id="img-hum"alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted text-left">Actualizado: <?=$measurement["created_at"]?></small>
+                    </div>
+                </div>
+                <div class="card bg-light mb-0 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h3 class="text-left">Humedad</h3>
+                                <h5 class="text-left">de tierra</h5>
+                            </div>
+                            <div class="card-value col-5">
+                                <h1 class="card-text"><?=$measurement["soil_humidity_1"]?>%</h1>
+                                <img src="images/soil_hum.svg" id="img-soil"alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted text-left">Actualizado: <?=$measurement["created_at"]?></small>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="card-deck ">
+                <div class="card bg-light mb-3 text-center">
+                    <h5 class="card-header" id="titulo">Historial de Temperatura y Humedad ambiente</h5>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="myLineChart"></canvas>
+                            <script src="js/line.js"></script>
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="input-group col-md-6">
+                                    <!-- <label for="date_chart1" class="text">Fecha</label> -->
+                                    <input type="date" class="form-control" id="date_chart_temp_hum" >
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button" onclick="loadData()">Actualizar</button>
+                                    </div>
+                                    <div class="alert alert-warning" id="alerta" role="alert">
+                                        <strong>UPS! </strong> No hay datos el dia seleccionado.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-deck">
+                <div class="card  text-success bg-dark mb-3 text-center">
+                    <h5 class="card-header">Iluminación</h5>
+                    <div class="card-body">
+                        <img class="lamp" src="images/lamp.png" alt="Card image cap">
+                        <h3 class="card-text text-success">Encendida</h3>
+                        <a href="#" class="btn btn-secondary">Apagar</a>
+                    </div>
+                </div>
+
+                <div class="card  text-success bg-dark mb-3 text-center">
+                    <h5 class="card-header">Riego</h5>
+                    <div class="card-body">
+                        <img class="lamp" src="images/riego.png" alt="Card image cap">
+                        <h3 class="card-text">Apagado</h3>
+                        <a href="#" class="btn btn-secondary">Encender</a>
+                    </div>
+                </div>
+
+                <div class="card text-success bg-dark mb-3 text-center">
+                    <h5 class="card-header">Ventilador</h5>
+                    <div class="card-body">
+                        <img class="lamp" src="images/ventilador.png" alt="Card image cap">
+                        <h3 class="card-text">Encendido</h3>
+                        <a href="#" class="btn btn-secondary">Apagar</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card-deck">
-            <div class="card  text-success bg-dark mb-3 text-center">
-                <h5 class="card-header">Iluminación</h5>
-                <div class="card-body">
-                    <!-- <p class="card-title">Estado</p> -->
-                    <img class="lamp" src="images/lamp.png" alt="Card image cap">
-                    <h3 class="card-text text-success">Encendida</h3>
-                    <a href="#" class="btn btn-secondary">Apagar</a>
-                </div>
-                <!-- <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div> -->
-            </div>
-
-            <div class="card  text-success bg-dark mb-3 text-center">
-                <h5 class="card-header">Riego</h5>
-                <div class="card-body">
-                    <!-- <h5 class="card-title">Humedad interna</h5> -->
-                    <img class="lamp" src="images/riego.png" alt="Card image cap">
-                    <h3 class="card-text">Apagado</h3>
-                    <a href="#" class="btn btn-secondary">Encender</a>
-                </div>
-                <!-- <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div> -->
-            </div>
-
-            <div class="card text-success bg-dark mb-3 text-center">
-                <h5 class="card-header">Ventilador</h5>
-                <div class="card-body">
-                    <!-- <h5 class="card-title">Humedad interna</h5> -->
-                    <img class="lamp" src="images/ventilador.png" alt="Card image cap">
-                    <h3 class="card-text">Encendido</h3>
-                    <a href="#" class="btn btn-secondary">Apagar</a>
-                </div>
-                <!-- <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div> -->
-            </div>
-        </div>
-    </div>
     <footer class="footer container-fluid">
         <div class="container  d-flex justify-content-around">
-            <a class="ref_menu" href="#">
+            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
                 <img src="images/isologo_grower-lab.svg" class="icon_menu"alt="">
+                <p class="text-icon">inicio</p>
             </a>
-            <a class="ref_menu" href="#">
+            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
+                <img src="images/statistics.svg" class="icon_menu"alt="">
+                <p class="text-icon">estadísticas</p>
+            </a>
+            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
                 <img src="images/calendar.svg" class="icon_menu"alt="">
+                <p class="text-icon">programas</p>
             </a>
-            <a class="ref_menu" href="#">
+            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
                 <img src="images/settings.svg" class="icon_menu"alt="">
+                <p class="text-icon">config.</p>
             </a>
         </div>
     </footer>
     
-    
-
 <script src="/js/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

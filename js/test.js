@@ -1,11 +1,12 @@
 
 $(document).ready(function(){
+    function blur(){
+        $("#name-grower").css('filter','blur(0px)');
+     };
+     window.setTimeout( blur, 5000 ); 
+
     
-    $("#text_1").click(function(){
-        $(this).css("color", "blue").slideUp(2000); //
-        console.log("test")
-    })  
-
-
+    console.log("listo");
+    
 
 });

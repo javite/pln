@@ -142,7 +142,7 @@ function updateDataChar() {
             }
         }
     };
-    xhttp.open("GET", "https://grower-lab.com/backend/api/querys.php?x="+json_string, true);//grower-lab.com
+    xhttp.open("GET", "https://grower-lab.com/api/querys.php?x="+json_string, true);//grower-lab.com
     xhttp.send();
     
 }

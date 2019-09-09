@@ -12,27 +12,31 @@ body{
     z-index: -1;
     display: block;
     height: 100vh;
-    background-color: #212125;
+    background-color: #ffffff;
   }
  
 .logo-svg{
     width:auto;
     height:30px;
-    filter: invert(0);
+    filter: invert(1);
+    margin-right: 3px;
 }
-.name-grower{
-    transition-duration: 1s;
-    transition:
+#name-grower{
+    transition-duration: 2s;
     filter: blur(1px);
     font-size: 22px;
     color: white;
     font-weight: 500;
 }
-.sticky{
-
-}
 .icon_menu{
-    filter: invert(45%)
+    filter: invert(45%);
+    height: 2em;
+}
+.text-icon{
+    font-size: 0.6rem;
+    color: gray;
+    text-align: center;
+    margin-bottom: 0;
 }
 .footer{
     background-color: #e7e7ea;
@@ -40,7 +44,6 @@ body{
     position: fixed;
     bottom: 0;
     z-index: 3;
-    /* padding-top: 5px; */
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -62,9 +65,7 @@ h1, h3, h5{
     font-family: 'Quicksand', sans-serif;
     font-size: 22px;
 }
-.icon_menu{
-    height: 2em;
-}
+
 
 img.img-fondo {
     min-width: 750px;
@@ -125,21 +126,46 @@ canvas{
     position: relative;
     color: white;
     width: fit-content;
-    /* border: 1px solid rgba(200, 200, 200, 0.8);
-    padding: 5px;
-    border-radius: 5px; */
     display: flex;
     justify-content: space-around;
 }
 
-/* .container div.container{
-    background-color: aliceblue;
-} */
-.cont-text{
-    width: 60%;
+.card-footer{
+    padding: .4rem 1.25rem;
+    /* background-color: #81ea93ba; */
 }
 .card-text{
-    width: 40%;
+    margin-bottom: 0;
+    color: #40474e;
+}
+.card-title{
+    margin-bottom: 5px;
+}
+.card-subtitle{
+    margin-bottom: 5px;
+}
+.card-value{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+}
+.card-body{
+    padding: 1rem; 
+    /* background-color: #80f994fc; */
+}
+#img-temp{
+    width:65px;
+    margin-left: 8px;
+}
+#img-hum{
+    width:65px;
+    margin-left: 8px;
+}
+#img-soil{
+    height: 65px;
+    margin-left: 8px;
 }
 .chart-container{
     margin: auto;
@@ -155,7 +181,6 @@ canvas{
     flex-direction: column;
     text-decoration: none;
 }
-
 .chart{
     background-color: white;
 }
