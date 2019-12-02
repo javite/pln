@@ -1,3 +1,5 @@
+<!-- Esta es la consulta que viene desde la página para armar el grafico -->
+
 <?php
 
 include_once("../clases/dbmysql.php");

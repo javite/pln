@@ -105,6 +105,18 @@ class DBMySQL extends DB {
       $consulta->execute();
 
   }
+
+  public function getProgram($data){
+    $idDevice = $data["idDevice"];
+    $query = $this->dataBase->prepare("SELECT * FROM outputs where id = :idDevice");
+    $query->bindValue(':idDevice',$idDevice,PDO::PARAM_INT);
+    // $consulta->bindValue(':temperature',$temperature ,PDO::PARAM_INT);
+    // $consulta->bindValue(':humidity',$humidity ,PDO::PARAM_INT);
+    // $consulta->bindValue(':soil_humidity_1',$soil_humidity_1 ,PDO::PARAM_INT);
+    $query->execute();
+    $outp = $query->fetch(PDO::FETCH_ASSOC);
+    return json_encode($outp);
+  }
 }
 
 ?>

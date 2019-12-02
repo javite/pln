@@ -4,74 +4,18 @@ $temperature = "";
 $humidity = "";
 $measurement = $db->getLastMeasurement(1);
 
+include("head.php");
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   
-    <title>Grower-lab</title>
-
-    <!-- <meta name="theme-color" content="#F0DB4F"> -->
-    <meta name="MobileOptimized" content="width">
-    <meta name="HandheldFriendly" content="true">
-
-    <!-- PWA config -->
-    <link rel="manifest" href="manifest.json">
-    <!-- iconos  -->
-    <link rel="apple-touch-icon" href="images/icon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/grower-lab_180x180.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="images/grower-lab_167x167.png">
-	<!-- titulo icono -->
-    <meta name="apple-mobile-web-app-title" content="Grower-lab">
-    <!-- standalone -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- bar color  -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <!-- splash  -->
-    <link href="images/splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-    <link href="images/splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
-
-    <script src="js/moment.js"></script>
-    <script src="js/chart.js"></script>
-    <script src="js/test.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
+<script src="js/moment.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/test.js"></script>
    
 </head>
 <body onload="loadData()">
     <div class="background-image"></div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <div class="w-5"></div>
-            
-            <span id="name-grower">
-            <img src="images/isologo_grower-lab_thin.svg" class="logo-svg"  alt="" >
-            grower-lab</span>
-
-            <div class="contenedor-usuario">
-                <a class="usuario" href="logout.php">
-                    <i class="material-icons user-icon">account_circle</i>
-                </a>
-            </div>
-        </div>
-    </nav>
+    <?php include('navbar.php')?>
         <div class="container-1">
             <div class="card-deck">
                 <div class="card bg-light mb-0 text-center">
@@ -186,30 +130,4 @@ $measurement = $db->getLastMeasurement(1);
                 </div>
             </div>
         </div>
-    <footer class="footer container-fluid">
-        <div class="container  d-flex justify-content-around">
-            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
-                <img src="images/isologo_grower-lab.svg" class="icon_menu"alt="">
-                <p class="text-icon">inicio</p>
-            </a>
-            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
-                <img src="images/statistics.svg" class="icon_menu"alt="">
-                <p class="text-icon">estadísticas</p>
-            </a>
-            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
-                <img src="images/calendar.svg" class="icon_menu"alt="">
-                <p class="text-icon">programas</p>
-            </a>
-            <a class="ref_menu d-flex flex-column justify-content-center" href="#">
-                <img src="images/settings.svg" class="icon_menu"alt="">
-                <p class="text-icon">config.</p>
-            </a>
-        </div>
-    </footer>
-    
-<script src="/js/script.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-</body>
-</html>
+<?php include('footer.php') ?>
