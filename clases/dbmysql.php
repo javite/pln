@@ -117,6 +117,31 @@ class DBMySQL extends DB {
     $outp = $query->fetch(PDO::FETCH_ASSOC);
     return json_encode($outp);
   }
+
+  public function saveProgram($data){
+
+    $device_id = 1;
+    $user_id = 1;
+    // $hour_on= $data["hour_on"];
+    // $hour_off = $data["hour_off"];
+    $out = 2;
+    $hour_on= 10;
+    $hour_off = 23;
+    $days = $data["days"];
+    $timerMode = 1;
+
+    $consulta = $this->dataBase->prepare("insert into outputs values (null, :device_id, :user_id, :out, 'VENTILACION',:hour_on, :hour_off, :days, :timerMode, default, default)");
+    $consulta->bindValue(':device_id',$device_id,PDO::PARAM_INT);
+    $consulta->bindValue(':user_id',$user_id,PDO::PARAM_INT);
+    $consulta->bindValue(':out',$out ,PDO::PARAM_INT);
+    $consulta->bindValue(':hour_on',$hour_on ,PDO::PARAM_INT);
+    $consulta->bindValue(':hour_off',$hour_off ,PDO::PARAM_INT);
+    $consulta->bindValue(':days',$days ,PDO::PARAM_INT);
+    $consulta->bindValue(':timerMode',$timerMode ,PDO::PARAM_INT);
+    $consulta->execute();
+
+  }
+
 }
 
 ?>
