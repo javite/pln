@@ -46,8 +46,8 @@ if ($_POST) {
 </head>
 
 <body>
-    <div class="fondo">
-        <div class="login-div">
+    <div class="fondo vw-100">
+        <div class="width_1">
             <div class="main-div">
                 <div class="panel">
                     <h2>Logueate</h2>

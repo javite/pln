@@ -9,7 +9,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $query = $_GET;
 $results = $db->getProgram($query);
-//$results = '{"timerMode" : "DAILY", "hour_on" : [0.0], "hour_off" : [1.5], "days" : [4],"out" : 2}';
 echo $results;
 http_response_code(200); 
 

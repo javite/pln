@@ -108,35 +108,72 @@ class DBMySQL extends DB {
 
   public function getProgram($data){
     $idDevice = $data["idDevice"];
-    $query = $this->dataBase->prepare("SELECT * FROM outputs where id = :idDevice");
+    $query = $this->dataBase->prepare("SELECT * FROM outputs where device_id = :idDevice");
     $query->bindValue(':idDevice',$idDevice,PDO::PARAM_INT);
-    // $consulta->bindValue(':temperature',$temperature ,PDO::PARAM_INT);
-    // $consulta->bindValue(':humidity',$humidity ,PDO::PARAM_INT);
-    // $consulta->bindValue(':soil_humidity_1',$soil_humidity_1 ,PDO::PARAM_INT);
     $query->execute();
-    $outp = $query->fetch(PDO::FETCH_ASSOC);
-    return json_encode($outp);
+    $outp = $query->fetchAll(PDO::FETCH_ASSOC);
+    
+    $on = $outp[0]['hour_on']; //saca array de string
+    $on = substr($on, 1, strlen($on)-2); //saca primer corchete y ultimo
+    $array = explode(",", $on); //separa valores por coma y transforma en array
+    foreach ($array as $key => $value) { 
+        $array[$key] = floatval($value); //tranforma string a float
+    }
+    $outp[0]['hour_on'] = $array; //guarda array de float
+
+    $on = $outp[0]['hour_off'];
+    $on = substr($on, 1, strlen($on)-2);
+    $array = explode(",", $on);
+    foreach ($array as $key => $value) {
+        $array[$key] = floatval($value);
+    }
+    $outp[0]['hour_off'] = $array;
+
+    $on = $outp[0]['days'];
+    $on = substr($on, 1, strlen($on)-2);
+    $array = explode(",", $on);
+    foreach ($array as $key => $value) {
+        $array[$key] = floatval($value);
+    }
+    $outp[0]['days'] = $array;
+    $json = json_encode($outp[0]);
+    return $json;
+
   }
 
   public function saveProgram($data){
-
     $device_id = 1;
-    $user_id = 1;
-    // $hour_on= $data["hour_on"];
-    // $hour_off = $data["hour_off"];
-    $out = 2;
-    $hour_on= 10;
-    $hour_off = 23;
-    $days = $data["days"];
-    $timerMode = 1;
+    $out = $data["out"];
+    $variable = $data["hour_on"];
 
-    $consulta = $this->dataBase->prepare("insert into outputs values (null, :device_id, :user_id, :out, 'VENTILACION',:hour_on, :hour_off, :days, :timerMode, default, default)");
+    $hour = substr($variable, 0, strpos($variable,':'));
+    $hour_f = (float)$hour;
+    $minute = substr($variable, -2);
+    $minute_f = (float)$minute;
+    $hour_c = $hour_f + $minute*0.0167;
+    $hour_on = '['.$hour_c.']';
+
+    $variable = $data["hour_off"];
+    $hour = substr($variable, 0, strpos($variable,':'));
+    $hour_f = (float)$hour;
+    $minute = substr($variable, -2);
+    $minute_f = (float)$minute;
+    $hour_c = $hour_f + $minute*0.0167;
+    $hour_off = '['.$hour_c.']';
+    
+    $days = '['.$data["days"].']';
+    if ($data["days"] == 7) {
+      $timerMode = 1; //PER_DAY = 0, DAILY = 1, PERIOD_DAILY = 2
+    } else {
+      $timerMode = 0;
+    }
+
+    $consulta = $this->dataBase->prepare("insert into outputs values (null, :device_id, :out, 'VENTILACION',:hour_on, :hour_off, :days, :timerMode, default, default)");
     $consulta->bindValue(':device_id',$device_id,PDO::PARAM_INT);
-    $consulta->bindValue(':user_id',$user_id,PDO::PARAM_INT);
     $consulta->bindValue(':out',$out ,PDO::PARAM_INT);
-    $consulta->bindValue(':hour_on',$hour_on ,PDO::PARAM_INT);
-    $consulta->bindValue(':hour_off',$hour_off ,PDO::PARAM_INT);
-    $consulta->bindValue(':days',$days ,PDO::PARAM_INT);
+    $consulta->bindValue(':hour_on',$hour_on ,PDO::PARAM_STR);
+    $consulta->bindValue(':hour_off',$hour_off ,PDO::PARAM_STR);
+    $consulta->bindValue(':days',$days ,PDO::PARAM_STR);
     $consulta->bindValue(':timerMode',$timerMode ,PDO::PARAM_INT);
     $consulta->execute();
 
