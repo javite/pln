@@ -40,35 +40,37 @@ if ($_POST) {
     <title>login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style_login.css">
+    <link rel="stylesheet" type="text/css" href="css/style_login.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <!-- <script src="main.js"></script> -->
 </head>
 
 <body>
-    <div class="fondo vw-100">
-        <div class="width_1">
-            <div class="main-div">
-                <div class="panel">
-                    <h2>Logueate</h2>
-                    <p>Ingresa tu usuario y contraseña</p>
+    <div class="fondo">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="main-div col-sm-6">
+                    <div class="panel">
+                        <h2>Logueate</h2>
+                        <p>Ingresa tu usuario y contraseña</p>
+                    </div>
+                    <form id="Login" action="login.php" method="post">
+                        <div class="form-group">
+                            <input type="text" name="email" class="form-control" id="inputEmail" placeholder="email" value=<?=$email?>><span class="error"><?=$mensajeEmail?></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>><span class="error"><?=$mensajeContrasena?></span>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="exampleCheck1" name="remember-me"> 
+                            <label class="custom-control-label" for="exampleCheck1">Recordame</label>
+                        </div>
+                        <div class="forgot">
+                            <a href="registracion.php">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
                 </div>
-                <form id="Login" action="login.php" method="post">
-                    <div class="form-group">
-                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="email" value=<?=$email?>><span class="error"><?=$mensajeEmail?></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Contraseña" value=<?=$contrasena?>><span class="error"><?=$mensajeContrasena?></span>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="exampleCheck1" name="remember-me"> 
-                        <label class="custom-control-label" for="exampleCheck1">Recordame</label>
-                    </div>
-                    <div class="forgot">
-                        <a href="registracion.php">¿Olvidaste tu contraseña?</a>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
             </div>
         </div>
     </div>

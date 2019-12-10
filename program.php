@@ -3,7 +3,7 @@
 include('head.php')
 ?>
 <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
-
+<script src="js/test.js"></script>
 <body>
 <?php include('navbar.php')?>
 <div class="container-fluid">
@@ -44,7 +44,9 @@ include('head.php')
                 </div>
         </div>
     </div>
+    <div class="container-fluid height-bar"></div>
 </div>
+
 <?php include('footer.php')?>
 
 

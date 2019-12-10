@@ -16,17 +16,17 @@ include("head.php");
 <body onload="loadData()">
     <div class="background-image"></div>
     <?php include('navbar.php')?>
-        <div class="container-1">
+        <div class="container-fluid">
             <div class="card-deck">
-                <div class="card bg-light mb-0 text-center">
+                <div class="card bg-light text-center">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-7">
-                                <h3 class="text-left">Temperatura</h3>
+                            <div class="col">
+                                <h4 class="text-left">Temperatura</h4>
                                 <h5 class="text-left">ambiente</h5>
                             </div>
-                            <div class="card-value col-5">
-                                <h1 class="card-text"><?=$measurement["temperature"]?>ºC</h1>
+                            <div class="card-value col">
+                                <h3 class="card-text"><?=$measurement["temperature"]?>ºC</h3>
                                 <img src="images/thermometer.svg" id="img-temp"alt="">
                             </div>
                         </div>
@@ -35,15 +35,15 @@ include("head.php");
                         <small class="text-muted text-left">Actualizado: <?=$measurement["created_at"]?></small>
                     </div>
                 </div>
-                <div class="card bg-light mb-0 text-center">
+                <div class="card bg-light text-center">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-7">
-                                <h3 class="text-left">Humedad</h3>
+                            <div class="col">
+                                <h4 class="text-left">Humedad</h4>
                                 <h5 class="text-left">ambiente</h5>
                             </div>
-                            <div class="card-value col-5">
-                                <h1 class="card-text"><?=$measurement["humidity"]?>%</h1>
+                            <div class="card-value col">
+                                <h3 class="card-text"><?=$measurement["humidity"]?>%</h3>
                                 <img src="images/drop.svg" id="img-hum"alt="">
                             </div>
                         </div>
@@ -52,15 +52,15 @@ include("head.php");
                         <small class="text-muted text-left">Actualizado: <?=$measurement["created_at"]?></small>
                     </div>
                 </div>
-                <div class="card bg-light mb-0 text-center">
+                <div class="card bg-light text-center">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-7">
-                                <h3 class="text-left">Humedad</h3>
+                            <div class="col">
+                                <h4 class="text-left">Humedad</h4>
                                 <h5 class="text-left">de tierra</h5>
                             </div>
-                            <div class="card-value col-5">
-                                <h1 class="card-text"><?=$measurement["soil_humidity_1"]?>%</h1>
+                            <div class="card-value col">
+                                <h3 class="card-text"><?=$measurement["soil_humidity_1"]?>%</h3>
                                 <img src="images/soil_hum.svg" id="img-soil"alt="">
                             </div>
                         </div>
@@ -80,7 +80,7 @@ include("head.php");
                             <canvas id="myLineChart"></canvas>
                             <script src="js/line.js"></script>
                         </div>
-                        <div class="container">
+                        <div class="container-fluid">
                             <div class="row justify-content-md-center">
                                 <div class="input-group col-md-6">
                                     <!-- <label for="date_chart1" class="text">Fecha</label> -->
@@ -106,8 +106,8 @@ include("head.php");
                     <h5 class="card-header">Iluminación</h5>
                     <div class="card-body">
                         <img class="lamp" src="images/lamp.png" alt="Card image cap">
-                        <h3 class="card-text text-success">Encendida</h3>
-                        <a href="#" class="btn btn-secondary">Apagar</a>
+                        <h4 class="card-text text-success mb-3">Encendida</h4>
+                        <a href="#" class="btn btn-secondary mb-2">Apagar</a>
                     </div>
                 </div>
 
@@ -115,8 +115,8 @@ include("head.php");
                     <h5 class="card-header">Riego</h5>
                     <div class="card-body">
                         <img class="lamp" src="images/riego.png" alt="Card image cap">
-                        <h3 class="card-text">Apagado</h3>
-                        <a href="#" class="btn btn-secondary">Encender</a>
+                        <h4 class="card-text text-success mb-3">Apagado</h4>
+                        <a href="#" class="btn btn-secondary mb-2">Encender</a>
                     </div>
                 </div>
 
@@ -124,10 +124,11 @@ include("head.php");
                     <h5 class="card-header">Ventilador</h5>
                     <div class="card-body">
                         <img class="lamp" src="images/ventilador.png" alt="Card image cap">
-                        <h3 class="card-text">Encendido</h3>
-                        <a href="#" class="btn btn-secondary">Apagar</a>
+                        <h4 class="card-text text-success mb-3">Encendido</h4>
+                        <a href="#" class="btn btn-secondary mb-2">Apagar</a>
                     </div>
                 </div>
             </div>
+            <div class="container-fluid height-bar"></div>
         </div>
 <?php include('footer.php') ?>

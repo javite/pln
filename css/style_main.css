@@ -129,6 +129,10 @@ canvas{
     display: flex;
     justify-content: space-around;
 }
+.card-deck{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
 
 .card-footer{
     padding: .4rem 1.25rem;
@@ -152,20 +156,19 @@ canvas{
     padding: 4px;
 }
 .card-body{
-    padding: 1rem; 
-    /* background-color: #80f994fc; */
+    padding: 0.4rem; 
 }
 #img-temp{
-    width:65px;
-    margin-left: 8px;
+    width:40px;
+    margin-left: 10px;
 }
 #img-hum{
-    width:65px;
-    margin-left: 8px;
+    width:48px;
+    margin-left: 10px;
 }
 #img-soil{
-    height: 65px;
-    margin-left: 8px;
+    height: 48px;
+    margin-left: 10px;
 }
 .chart-container{
     margin: auto;
@@ -183,4 +186,7 @@ canvas{
 }
 .chart{
     background-color: white;
+}
+.height-bar{
+    height: 50px;
 }
