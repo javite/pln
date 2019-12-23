@@ -40,7 +40,6 @@ if($authentication->isLogged()){
     $nombreUsuario = "Ingresar";
 }
 
-
 include("head.php");
 ?>
 
@@ -48,7 +47,6 @@ include("head.php");
 
 </head>
 <body>
-    <!-- <img class="imagen-fondo" src="images/fondo4.jpg" alt=""> -->
     <div class="fondo vw-100">
         <div class="width">
             <div class="cont-date">

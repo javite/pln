@@ -106,47 +106,108 @@ class DBMySQL extends DB {
 
   }
 
-  public function getProgram($data){
-    $idDevice = $data["idDevice"];
-    $query = $this->dataBase->prepare("SELECT * FROM outputs where device_id = :idDevice");
-    $query->bindValue(':idDevice',$idDevice,PDO::PARAM_INT);
+  public function getPrograms($data){
+    $device_id = $data["device_id"];
+    $query = $this->dataBase->prepare("SELECT * FROM programs where device_id = :device_id");
+    $query->bindValue(':device_id',$device_id,PDO::PARAM_INT);
     $query->execute();
-    $outp = $query->fetchAll(PDO::FETCH_ASSOC);
+    $programs = $query->fetchAll(PDO::FETCH_ASSOC);
+    return json_encode($programs);
+  }
+
+  public function getOutputs($data){
+    $device_id = $data["device_id"];
+    $query = $this->dataBase->prepare("SELECT * FROM outputs where device_id = :device_id");
+    $query->bindValue(':device_id',$device_id,PDO::PARAM_INT);
+    $query->execute();
+    $outputs = $query->fetchAll(PDO::FETCH_ASSOC);
     
-    $on = $outp[0]['hour_on']; //saca array de string
-    $on = substr($on, 1, strlen($on)-2); //saca primer corchete y ultimo
-    $array = explode(",", $on); //separa valores por coma y transforma en array
+    foreach ($outputs as $index => $output) {
+      $on = $output['hour_on']; //saca array de string
+      $on = substr($on, 1, strlen($on)-2); //saca primer corchete y ultimo
+      $array = explode(",", $on); //separa valores por coma y transforma en array
     foreach ($array as $key => $value) { 
-        $array[$key] = floatval($value); //tranforma string a float
+        $array[$key] = $value; //tranforma en array
     }
-    $outp[0]['hour_on'] = $array; //guarda array de float
+    $output['hour_on'] = $array; //guarda array de strings
 
-    $on = $outp[0]['hour_off'];
+    $on = $output['hour_off'];
     $on = substr($on, 1, strlen($on)-2);
     $array = explode(",", $on);
     foreach ($array as $key => $value) {
-        $array[$key] = floatval($value);
+        $array[$key] = $value;
     }
-    $outp[0]['hour_off'] = $array;
+    $output['hour_off'] = $array;
 
-    $on = $outp[0]['days'];
+    $on = $output['days'];
     $on = substr($on, 1, strlen($on)-2);
     $array = explode(",", $on);
     foreach ($array as $key => $value) {
-        $array[$key] = floatval($value);
+        $array[$key] = $value;
     }
-    $outp[0]['days'] = $array;
-    $json = json_encode($outp[0]);
+    $output['days'] = $array;
+    $outputs[$index] = $output;
+    }
+
+    $json = json_encode($outputs);
     return $json;
 
   }
+  public function getOut($data){
+    $program_id = $data["program_id"];
+    if(isset($data["out_num"])){
+      $out = $data["out_num"];
+      $string = "SELECT * FROM outputs where `program_id`= :program_id and `out` = :out";
+    } else {
+      $string = "SELECT * FROM outputs where `program_id` = :program_id";
+    }
+    
+    $query = $this->dataBase->prepare($string);
+    $query->bindValue(':program_id',$program_id,PDO::PARAM_INT);
+    if(isset($data["out_num"])){
+      $query->bindValue(':out',$out,PDO::PARAM_INT);
+    }
+    $query->execute();
+    $output = $query->fetch(PDO::FETCH_ASSOC);
+
+    if($output){
+      $on = $output['hour_on']; //saca array de string
+      $on = substr($on, 1, strlen($on)-2); //saca primer corchete y ultimo
+      $array = explode(",", $on); //separa valores por coma y transforma en array
+      foreach ($array as $key => $value) { 
+          $array[$key] = $value; //tranforma en array
+      }
+      $output['hour_on'] = $array; //guarda array de strings
+  
+      $on = $output['hour_off'];
+      $on = substr($on, 1, strlen($on)-2);
+      $array = explode(",", $on);
+      foreach ($array as $key => $value) {
+          $array[$key] = $value;
+      }
+      $output['hour_off'] = $array;
+  
+      $on = $output['days'];
+      $on = substr($on, 1, strlen($on)-2);
+      $array = explode(",", $on);
+      foreach ($array as $key => $value) {
+          $array[$key] = $value;
+      }
+      $output['days'] = $array;
+      
+    } else {
+      $output = "";
+    }
+    $json = json_encode($output);
+    return $json;
+  }
 
   public function saveProgram($data){
-    $device_id = 1;
+    $device_id = 1; //TODO poner device id
     $out = $data["out"];
     $variable = $data["hour_on"];
 
-    $hour = substr($variable, 0, strpos($variable,':'));
+    $hour = substr($variable, 0, strpos($variable,':')); //TODO volver a string
     $hour_f = (float)$hour;
     $minute = substr($variable, -2);
     $minute_f = (float)$minute;
@@ -167,18 +228,30 @@ class DBMySQL extends DB {
     } else {
       $timerMode = 0;
     }
-
-    $consulta = $this->dataBase->prepare("insert into outputs values (null, :device_id, :out, 'VENTILACION',:hour_on, :hour_off, :days, :timerMode, default, default)");
-    $consulta->bindValue(':device_id',$device_id,PDO::PARAM_INT);
-    $consulta->bindValue(':out',$out ,PDO::PARAM_INT);
-    $consulta->bindValue(':hour_on',$hour_on ,PDO::PARAM_STR);
-    $consulta->bindValue(':hour_off',$hour_off ,PDO::PARAM_STR);
-    $consulta->bindValue(':days',$days ,PDO::PARAM_STR);
-    $consulta->bindValue(':timerMode',$timerMode ,PDO::PARAM_INT);
-    $consulta->execute();
+    // var_dump($hour_on); 
+    // var_dump($hour_off);
+    // var_dump($days);
+    // exit;
+    $query = $this->dataBase->prepare("insert into outputs values (null, :device_id, :out, 'VENTILACION',:hour_on, :hour_off, :days, :timerMode, default, default)");
+    $query->bindValue(':device_id',$device_id,PDO::PARAM_INT);
+    $query->bindValue(':out',$out ,PDO::PARAM_INT);
+    $query->bindValue(':hour_on',$hour_on ,PDO::PARAM_STR);
+    $query->bindValue(':hour_off',$hour_off ,PDO::PARAM_STR);
+    $query->bindValue(':days',$days ,PDO::PARAM_STR);
+    $query->bindValue(':timerMode',$timerMode ,PDO::PARAM_INT);
+    $query->execute();
 
   }
 
-}
+  public function getDevices($userID){
 
+    $query = $this->dataBase->prepare("SELECT * FROM devices where user_id = :user_id");
+    $query->bindValue(':user_id',$userID,PDO::PARAM_INT);
+    $query->execute();
+    $response = $query->fetchAll(PDO::FETCH_ASSOC);
+    return json_encode($response);
+  }
+
+  
+}
 ?>

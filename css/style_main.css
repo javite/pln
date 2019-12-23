@@ -23,7 +23,7 @@ body{
 }
 #name-grower{
     transition-duration: 2s;
-    filter: blur(1px);
+    filter: blur(0px);
     font-size: 22px;
     color: white;
     font-weight: 500;
@@ -40,7 +40,7 @@ body{
 }
 .footer{
     background-color: #e7e7ea;
-    height: 65px;
+    height: 70px;
     position: fixed;
     bottom: 0;
     z-index: 3;
@@ -70,48 +70,14 @@ h1, h3, h5{
 img.img-fondo {
     min-width: 750px;
     height: auto;
-    -webkit-filter: blur(3px);
+    -webkit-filter: blur(5px);
     filter: blur(5px);
     display: block;
 }
 
-img.planta{
-    width: 60px;
-}
 
 canvas{
     height: 400px;
-}
-
-.circulo-gradiente{
-    /* position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
-    padding: 5px; 
-    border-radius: 50%; 
-    display: inline-block;
-    background: rgb(26, 105, 209);
-    /* background: linear-gradient(yellow, rgb(196, 32, 211),#00b8ff); */
-
-}
-
-.circulo-principal {
-    width: 200px; 
-    height: 200px; 
-    background: white; 
-    border-radius: 50%; 
-    
-}
-
-.texto-circulo{
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 21;
-    width: 100%;
-    text-align: center;
 }
 
 .estado {
@@ -188,5 +154,19 @@ canvas{
     background-color: white;
 }
 .height-bar{
-    height: 50px;
+    height: 70px;
+}
+
+.out-container {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+.hidden{
+    display: none;
+}
+.error{
+    color: red;
 }

@@ -1,52 +1,40 @@
+
 <?php
-
-include('head.php')
+require_once("init.php");
+if ($_GET) {
+    $device_selected = $_GET["device_id"];
+    $programs = json_decode($db->getPrograms($_GET));
+}
 ?>
-<link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
-<script src="js/test.js"></script>
-<body>
-<?php include('navbar.php')?>
-<div class="container-fluid">
-    <div class="bg-light row justify-content-center">
-        <div class="col-sm-5">
-                <div class="">
-                <form action="saveProgram.php" method="POST" >
-                    <label class="label" for="out">Salida</label>
-                    <select class="mdb-select form-control md-form colorful-select dropdown-primary" name="out">
-                        <option value="0">Iluminación 1</option>
-                        <option value="1">Iluminación 2</option>
-                        <option value="2">Led placa</option>
-                        <option value="3">Bomba de agua 2</option>
-                        <option value="4">Extractor</option>
-                        <option value="5">Ventilador</option>
-                        <option value="6">Auxiliar 1</option>
-                        <option value="7">Auxiliar 2</option>
-                    </select>
-                    <label class="label" for="days">Dias</label>
-                    <select class="mdb-select form-control md-form colorful-select dropdown-primary" name="days">
-                        <option value="7">Todos los días</option>
-                        <option value="1">Lunes</option>
-                        <option value="2">Martes</option>
-                        <option value="3">Miercoles</option>
-                        <option value="4">Jueves</option>
-                        <option value="5">Viernes</option>
-                        <option value="6">Sabado</option>
-                        <option value="0">Domingo</option>
-                    </select>
-                    <br>
-                    <label class="mdb-main-label " for="hour_on">Hora encendido</label>
-                    <input placeholder="Selected time" type="time" class="form-control" name="hour_on">
-                    <label class="mdb-main-label" for="hour_off">Hora apagado</label>
-                    <input placeholder="Selected time" type="time" class="form-control" name="hour_off">
-                    <br>
-                    <button type="submit" class="btn btn-primary" value="submit">Submit</button>
-                </form>
-                </div>
-        </div>
-    </div>
-    <div class="container-fluid height-bar"></div>
-</div>
 
-<?php include('footer.php')?>
+<?php include('head.php')?>
+<link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
+<script src="js/functions.js"></script>
+<script src="js/program.js"></script>
+
+<body>
+    <?php include('navbar.php')?>
+    <input id="device_id" type="hidden" value = <?=$device_selected?>>
+    <!-- <div class="container-fluid">
+        <h4>Programa: </h4>
+    </div> -->
+    <div class='program-selector-bundle container-fluid mb-3'>
+        <label class='label-program-selector label' for='out'>Programas</label>
+        <?php if(sizeof($programs) == 0):?>
+            <div class='error'>No hay programas creados aun</div>
+        <?php else:?>
+            <select class='program-selector mdb-select form-control md-form colorful-select dropdown-primary'  name='program'>
+                <?php foreach ($programs as $key => $program):?>
+                    <option id = "program-<?=$key?>" value="<?=$program->id?>"><?=$program->name?></option>
+                <?php endforeach ;?>
+            </select>
+        <?php endif ?>
+    </div>
+
+    <div class="out-bundle container-fluid"></div>
+    <?php include('footer.php')?>
+
+</body>
+</html>
 
 

@@ -10,6 +10,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $query = $_GET;
 $results = $db->getProgram($query);
 echo $results;
-http_response_code(200); 
+http_response_code(200);
+
 
 ?>
