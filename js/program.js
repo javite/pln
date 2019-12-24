@@ -1,5 +1,5 @@
-var outs_names = ['Iluminación 1','Iluminación 2', 'Led placa','Extractor', 'Bomba de agua 2', 'Ventilador', 'Auxiliar 1', 'Auxiliar 2' ];
-var days_names = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves','Viernes', 'Sábado','Domingo', 'Todos los días']
+var outs_names;
+var days_names;
 var hasProgram = false;
 var output;
 var out_num = 0;
@@ -11,6 +11,8 @@ $(document).ready(function(){
     if(device_id == null){
         error("no hay device id");
     }
+    let reponse = getNames();
+    
     $(".program-selector").change(function(){
         program_id = $(this).val();
         debug("program_id: ");
@@ -110,4 +112,18 @@ function error(message){
 function debug(message){
     let debug = "debug: " + message;
     console.log(debug);
+}
+
+function getNames(){
+    $(".program-selector").hide();
+    fetch("api/getNames.php")
+    .then(data =>data.json())
+    .then(data => {
+        outs_names = data[1];
+        days_names = data[0];
+        $(".program-selector").show();
+        program_id = $(".program-selector").val();
+        getOutputs(program_id);
+    })
+    .catch(error => console.error(error))
 }

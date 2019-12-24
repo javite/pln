@@ -1,9 +1,13 @@
 <?php
 require_once("init.php");
+
+if(!$authentication->isLogged()){
+    header("Location:login.php");exit;
+}
 $temperature = "";
 $humidity = "";
-$user = $db->buscarPorEmail($_COOKIE["usuarioLogueado"]);
-$devices = json_decode($db->getDevices($user->getId())); //devuelve los devices de ese usuario
+$user = $_SESSION["user_email"]; //TODO guardar en cookies el user _id
+$devices = json_decode($db->getDevices($_SESSION["user_ID"])); //devuelve los devices de ese usuario
 $device_selected;
 if($_GET){
     $device_selected = $_GET["device_id"];
@@ -11,6 +15,7 @@ if($_GET){
     $device_selected = $devices[0]->id;
 }
 setcookie("device_id", $device_selected);
+$_SESSION["device_id"] = $device_selected;
 $measurement = $db->getLastMeasurement($device_selected);
 
 include("head.php");
@@ -19,30 +24,31 @@ include("head.php");
 <link rel="stylesheet" type="text/css" media="screen" href="css/style_main.css" />
 <script src="js/moment.js"></script>
 <script src="js/chart.js"></script>
-<script src="js/test.js"></script>
+<script src="js/functions.js"></script>
    
 </head>
 <body onload="loadData()">
     <div class="background-image"></div>
     <?php include('navbar.php')?>
     <div class="container-fluid">
-        <div class="devices-list row justify-content-center">
-            <div class="col-sm-5">
-                <label for="devices">Growers</label>
-                <?php if(count($devices) == 0):?>
-                    <p>No hay dispositivos asociados a este usuario: <?=$user->getEmail()?></p>
-                <?php else:?>
-                    <select name="devices" class="mdb-select form-control md-form colorful-select dropdown-primary">
-                    <?php foreach($devices as  $index => $device):?>
-                        <option value="<?=$device->id?>" <?php if($index == 0){echo "selected";}?>><?=$device->id?></option>
-                    <?php endforeach?>
-                    </select>
-                <?php endif?>
-            </div>
-        </div>
-
+            <form form action="main.php" method="get" class="devices-list row justify-content-center">
+                <div class="col-sm-5">
+                    <label for="devices">Growers</label>
+                    <?php if(count($devices) == 0):?>
+                        <p>No hay dispositivos asociados a este usuario: <?=$user->getEmail()?></p>
+                    <?php else:?>
+                        <select name="device_id" class="mdb-select form-control md-form colorful-select dropdown-primary">
+                        <?php foreach($devices as $device):?>
+                            <option value="<?=$device->id?>" <?php if($device->id== $device_selected){echo "selected";}?>><?=$device->name?></option>
+                        <?php endforeach?>
+                        </select>
+                    <?php endif?>
+                    <br>
+                    <button type="submit" class="btn btn-primary" value="submit">Seleccionar</button>
+                </div>
+            </form>
         <div class="card-deck">
-            <div class="card bg-light text-center">
+            <div class="card shadow bg-light text-center">
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
@@ -59,7 +65,7 @@ include("head.php");
                     <small class="text-muted text-left">Actualizado: <?=$measurement["created_at"]?></small>
                 </div>
             </div>
-            <div class="card bg-light text-center">
+            <div class="card shadow bg-light text-center">
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
@@ -76,7 +82,7 @@ include("head.php");
                     <small class="text-muted text-left">Actualizado: <?=$measurement["created_at"]?></small>
                 </div>
             </div>
-            <div class="card bg-light text-center">
+            <div class="card shadow bg-light text-center">
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
@@ -96,37 +102,8 @@ include("head.php");
             </div>
         </div>
 
-        <div class="card-deck ">
-            <div class="card bg-light mb-3 text-center">
-                <h5 class="card-header" id="titulo">Historial de Temperatura y Humedad ambiente</h5>
-                <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="myLineChart"></canvas>
-                        <script src="js/line.js"></script>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="row justify-content-md-center">
-                            <div class="input-group col-md-6">
-                                <!-- <label for="date_chart1" class="text">Fecha</label> -->
-                                <input type="date" class="form-control" id="date_chart_temp_hum" >
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" onclick="loadData()">Actualizar</button>
-                                </div>
-                                <div class="alert alert-warning" id="alerta" role="alert">
-                                    <strong>UPS! </strong> No hay datos el dia seleccionado.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Actualizado: <?=$measurement["created_at"]?></small>
-                </div>
-            </div>
-        </div>
-
         <div class="card-deck">
-            <div class="card  text-success bg-dark mb-3 text-center">
+            <div class="card shadow text-success bg-dark mb-3 text-center">
                 <h5 class="card-header">Iluminación</h5>
                 <div class="card-body">
                     <img class="lamp" src="images/lamp.png" alt="Card image cap">
@@ -135,7 +112,7 @@ include("head.php");
                 </div>
             </div>
 
-            <div class="card  text-success bg-dark mb-3 text-center">
+            <div class="card shadow text-success bg-dark mb-3 text-center">
                 <h5 class="card-header">Riego</h5>
                 <div class="card-body">
                     <img class="lamp" src="images/riego.png" alt="Card image cap">
@@ -144,7 +121,7 @@ include("head.php");
                 </div>
             </div>
 
-            <div class="card text-success bg-dark mb-3 text-center">
+            <div class="card shadow text-success bg-dark mb-3 text-center">
                 <h5 class="card-header">Ventilador</h5>
                 <div class="card-body">
                     <img class="lamp" src="images/ventilador.png" alt="Card image cap">

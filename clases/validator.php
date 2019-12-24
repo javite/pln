@@ -80,7 +80,7 @@ class Validator {
     else if ( filter_var($data_post["email"], FILTER_VALIDATE_EMAIL) == false) {
       $errores["email"] = "El email no es un email";
     } else {
-      $usuario = $db->buscarPorEmail($data_post["email"]);
+      $usuario = $db->searchByEmail($data_post["email"]);
 
       if ($usuario == NULL) {
         $errores["email"] = "No existe usuario con ese email";

@@ -12,7 +12,7 @@ class DBJSON extends DB {
   public function buscarPorID($id) {
 
   }
-  public function buscarPorEmail($email) {
+  public function searchByEmail($email) {
     
   }
 }

@@ -1,13 +1,13 @@
 
-var chart_1;
+var myLineChart;
 
 function createChart(){
 
-    var ctx_line = document.getElementById('temp_chart').getContext('2d');
+    var ctx_line = document.getElementById("myLineChart").getContext('2d');
     var data_line = [0, 0, 0, 0];
     var data_line2 = [0, 0, 0, 0];
     
-    chart_1 = new Chart(ctx_line, {
+    myLineChart = new Chart(ctx_line, {
         type: 'line',
         data: {
             labels: ["1", "2", "3","4"],
@@ -119,39 +119,32 @@ function createChart(){
 };
 
 function updateDataChar() {
-
-    let date_chart = $("#date_chart_temp_hum").val();
-    let device_id = getCookie('device_id');
-    if(device_id == null){
-        error("no hay device id");
-    } else {
-
-    let json_string = '{"table":"measurements", "limit":"50","device_id":"'+ device_id +'", "date":"' + date_chart + ' 00:00:00"}';
+    var xhttp, res;
+    xhttp = new XMLHttpRequest();
+    var date_chart = $("#date_chart_temp_hum").val();
+    var json_string = '{"table":"measurements", "limit":"50","device_id":1, "date":"'+date_chart+' 00:00:00"}';
     console.log("json_get: "+json_string);
-    fetch('api/querys.php?x=' + json_string)
-        .then(response => {
-            if(response.status != 200){             
-                return null;
-            } else {
-                return response.json();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText.length == 2){
+               $("#alerta").show();
             }
-        })
-        .then(response => {
-            if (response.length == 0){
-                $("#alerta").show();
-            } else {
-                response.forEach((data,index) => {
-                    chart_1.data.labels[index] = data.created_at;
-                    chart_1.data.datasets[0].data[index] = data.temperature;
-                    chart_1.data.datasets[1].data[index] = data.humidity;
-                })
+            else {
                 $("#alerta").hide();
-                chart_1.clear();
-                chart_1.update();
+                res = JSON.parse(this.responseText);
+                res.forEach(function (data, index) {
+                    myLineChart.data.labels[index] = data.created_at;
+                    myLineChart.data.datasets[0].data[index] = data.temperature;
+                    myLineChart.data.datasets[1].data[index] = data.humidity;
+                });
+                myLineChart.clear();
+                myLineChart.update();
             }
-        })
-        .catch(error => console.error(error))
-    }
+        }
+    };
+    xhttp.open("GET", "https://grower-lab.com/app/api/querys.php?x="+json_string, true);//grower-lab.com
+    xhttp.send();
+    
 }
 
 function loadData() {

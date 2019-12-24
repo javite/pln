@@ -3,7 +3,7 @@ var chart_1;
 
 function createChart(){
 
-    var ctx_line = document.getElementById('temp_chart').getContext('2d');
+    var ctx_line = document.getElementById("myLineChart").getContext('2d');
     var data_line = [0, 0, 0, 0];
     var data_line2 = [0, 0, 0, 0];
     
@@ -121,13 +121,9 @@ function createChart(){
 function updateDataChar() {
 
     let date_chart = $("#date_chart_temp_hum").val();
-    let device_id = getCookie('device_id');
-    if(device_id == null){
-        error("no hay device id");
-    } else {
-
-    let json_string = '{"table":"measurements", "limit":"50","device_id":"'+ device_id +'", "date":"' + date_chart + ' 00:00:00"}';
+    let json_string = '{"table":"measurements", "limit":"50","device_id":1, "date":"' + date_chart + ' 00:00:00"}';
     console.log("json_get: "+json_string);
+
     fetch('api/querys.php?x=' + json_string)
         .then(response => {
             if(response.status != 200){             
@@ -150,8 +146,7 @@ function updateDataChar() {
                 chart_1.update();
             }
         })
-        .catch(error => console.error(error))
-    }
+        .catch(error => console.error(error)) 
 }
 
 function loadData() {

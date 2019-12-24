@@ -47,7 +47,7 @@ class DBMySQL extends DB {
     return $users;
   }
 
-  function buscarPorEmail($email) {
+  function searchByEmail($email) {
     $query = $this->dataBase->prepare("SELECT * FROM users where email = :email");
     $query->bindValue(":email", $email);
     $query->execute();
@@ -252,6 +252,20 @@ class DBMySQL extends DB {
     return json_encode($response);
   }
 
+  function getNames() {
+    $query = $this->dataBase->prepare("SELECT * FROM days_names ORDER BY ID" );
+    $query->execute();
+    $days_names = $query->fetchAll(PDO::FETCH_COLUMN, 1);
+    
+    $query = $this->dataBase->prepare("SELECT * FROM outputs_names ORDER BY ID");
+    $query->execute();
+    $outputs_names = $query->fetchAll(PDO::FETCH_COLUMN, 1);
+
+    $result[0] = $days_names;
+    $result[1]= $outputs_names;
   
+    return json_encode($result);
+  }
+
 }
 ?>

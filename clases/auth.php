@@ -4,26 +4,31 @@
 class Auth {
   public function __construct() {
     session_start();
-    if (isset($_COOKIE["usuarioLogueado"]) && isset($_SESSION["usuarioLogueado"]) == false) {
-      $_SESSION["usuarioLogueado"] = $_COOKIE["usuarioLogueado"];
+    if (isset($_COOKIE["user_email"]) && isset($_SESSION["user_email"]) == false) {
+      $_SESSION["user_email"] = $_COOKIE["user_email"];
     }
   }
 
   function login($email) {
-    $_SESSION["usuarioLogueado"] = $email;
+    global $db;
+    $user = $db->searchByEmail($email);
+    $_SESSION["user_ID"] = $user->getId();
+    $_SESSION["user_name"] = $user->getName();
+    $_SESSION["user_email"] = $email;
   }
+
   function logout() {
     session_destroy();
-    setcookie("usuarioLogueado", null, -1);
+    setcookie("user_email", null, -1);
   }
 
   function isLogged() {
-    return isset($_SESSION["usuarioLogueado"]);
+    return isset($_SESSION["user_email"]);
   }
 
   public function userLogged() {
     global $db;
-    return $db->searchByEmail($_SESSION["usuarioLogueado"]); //devuelve un User
+    return $db->searchByEmail($_SESSION["user_email"]); //devuelve un User
   }
 
 }

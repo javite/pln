@@ -6,7 +6,7 @@
             <img src="images/isologo_grower-lab.svg" class="icon_menu"alt="">
             <p class="text-icon">inicio</p>
         </a>
-        <a class="ref_menu d-flex flex-column justify-content-center" href="#">
+        <a class="ref_menu d-flex flex-column justify-content-center" href="stats.php?device_id=<?=$device_selected?>">
             <img src="images/statistics.svg" class="icon_menu"alt="">
             <p class="text-icon">estadísticas</p>
         </a>
