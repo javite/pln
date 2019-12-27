@@ -176,3 +176,39 @@ canvas{
 .error{
     color: red;
 }
+.program-selector-bundle{
+    background-color: #bbbbbb2e;
+    
+}
+.out-bundle{
+    /* background-color: #a6a8ab4d; */
+}
+.border_1{
+    box-shadow: 1px 1px 6px rgba(0,0,0,.09);
+    border-radius: .25rem;
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    margin-bottom: 0.25rem;
+}
+.edit{
+    width: 20px;
+    filter: contrast(0.1);
+}
+.icon-out{
+    cursor: pointer;
+    width: 28px;
+    filter: contrast(0.1);
+    margin-right:5px;
+    margin-left:5px;
+    margin-bottom: 5px;
+    border: 1px solid #dee2e68a;
+    border-radius: 0.25rem;
+    padding: 2px;
+}
+.icon-out:first-child{
+margin-right: 8px;
+}
+.icon-out:hover{
+    filter: contrast(1);
+    border: 2px solid #d6b3188a;
+}

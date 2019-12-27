@@ -18,20 +18,21 @@ if ($_GET) {
     <!-- <div class="container-fluid">
         <h4>Programa: </h4>
     </div> -->
-    <div class='program-selector-bundle container-fluid mb-3'>
-        <label class='label-program-selector label' for='out'>Programas</label>
-        <?php if(sizeof($programs) == 0):?>
-            <div class='error'>No hay programas creados aun</div>
-        <?php else:?>
-            <select class='program-selector mdb-select form-control md-form colorful-select dropdown-primary'  name='program'>
-                <?php foreach ($programs as $key => $program):?>
-                    <option id = "program-<?=$key?>" value="<?=$program->id?>"><?=$program->name?></option>
-                <?php endforeach ;?>
-            </select>
-        <?php endif ?>
+    <div class="container">
+        <div class='program-selector-bundle border_1'>
+            <label class='label-program-selector label' for='out'>Programas</label>
+            <?php if(sizeof($programs) == 0):?>
+                <div class='error'>No hay programas creados aun</div>
+            <?php else:?>
+                <select class='program-selector mdb-select form-control md-form colorful-select dropdown-primary'  name='program'>
+                    <?php foreach ($programs as $key => $program):?>
+                        <option id = "program-<?=$key?>" value="<?=$program->id?>"><?=$program->name?></option>
+                    <?php endforeach ;?>
+                </select>
+            <?php endif ?>
+        </div>
+        <div class="out-bundle border_1" style="display: none"></div>
     </div>
-
-    <div class="out-bundle container-fluid"></div>
     <?php include('footer.php')?>
 
 </body>

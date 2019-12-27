@@ -10,7 +10,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 $data = json_decode(file_get_contents("php://input"));
-echo $db->saveProgram($data);
+echo $db->updateProgram($data);
 // header("Location:main.php");exit;
 // header("Location:program.php");exit;
 

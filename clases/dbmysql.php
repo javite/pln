@@ -202,44 +202,57 @@ class DBMySQL extends DB {
     return $json;
   }
 
-  public function saveProgram($data){
-    $device_id = 1; //TODO poner device id
-    $out = $data["out"];
-    $variable = $data["hour_on"];
+  public function updateProgram($data){
+    $output_id = 0; //TODO 
+    $out = 0;
+    $days = "";
+    $hour_on = "";
+    $hour_off = "";
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "output_id") !== false) {
+        $output_id = $data[$i]->value;
+      break;
+      }
+    }
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "out") !== false) {
+        $out = $data[$i]->value;
+      }
+    }
 
-    $hour = substr($variable, 0, strpos($variable,':')); //TODO volver a string
-    $hour_f = (float)$hour;
-    $minute = substr($variable, -2);
-    $minute_f = (float)$minute;
-    $hour_c = $hour_f + $minute*0.0167;
-    $hour_on = '['.$hour_c.']';
+    for ($i=0; $i < sizeOf($data); $i++) { 
+        if (strpos($data[$i]->name, "hour_on") !== false) {
+          $hour_on = $hour_on.",".$data[$i]->value;
+        }
+    }
+    $hour_on = substr($hour_on,1);
+    $hour_on = '['.$hour_on.']';
 
-    $variable = $data["hour_off"];
-    $hour = substr($variable, 0, strpos($variable,':'));
-    $hour_f = (float)$hour;
-    $minute = substr($variable, -2);
-    $minute_f = (float)$minute;
-    $hour_c = $hour_f + $minute*0.0167;
-    $hour_off = '['.$hour_c.']';
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "hour_off") !== false) {
+        $hour_off = $hour_off.",".$data[$i]->value;
+      }
+    }
+    $hour_off = substr($hour_off,1);
+    $hour_off = '['.$hour_off.']';
+
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "day") !== false) {
+        $days = $days.",".$data[$i]->value;
+      }
+    }
+    $days = substr($days,1);
+    $days = '['.$days.']';
     
-    $days = '['.$data["days"].']';
-    if ($data["days"] == 7) {
+    if ($days == '[7]') {
       $timerMode = 1; //PER_DAY = 0, DAILY = 1, PERIOD_DAILY = 2
     } else {
       $timerMode = 0;
     }
-    // var_dump($hour_on); 
-    // var_dump($hour_off);
-    // var_dump($days);
-    // exit;
-    $query = $this->dataBase->prepare("insert into outputs values (null, :device_id, :out, 'VENTILACION',:hour_on, :hour_off, :days, :timerMode, default, default)");
-    $query->bindValue(':device_id',$device_id,PDO::PARAM_INT);
-    $query->bindValue(':out',$out ,PDO::PARAM_INT);
-    $query->bindValue(':hour_on',$hour_on ,PDO::PARAM_STR);
-    $query->bindValue(':hour_off',$hour_off ,PDO::PARAM_STR);
-    $query->bindValue(':days',$days ,PDO::PARAM_STR);
-    $query->bindValue(':timerMode',$timerMode ,PDO::PARAM_INT);
+
+    $query = $this->dataBase->prepare("UPDATE outputs SET hour_on = '$hour_on', hour_off = '$hour_off', days = '$days', timerMode = '$timerMode' where id = '$output_id'");
     $query->execute();
+    return "OK";
 
   }
 

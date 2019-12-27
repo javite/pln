@@ -31,11 +31,11 @@ include("head.php");
     <div class="background-image"></div>
     <?php include('navbar.php')?>
     <div class="container-fluid">
-            <form form action="main.php" method="get" class="devices-list row justify-content-center">
-                <div class="col-sm-5">
+            <form form action="main.php" method="get" class="form devices-list">
+                <div class="form-group mx-sm-3">
                     <label for="devices">Growers</label>
                     <?php if(count($devices) == 0):?>
-                        <p>No hay dispositivos asociados a este usuario: <?=$user->getEmail()?></p>
+                        <p class="devices">No hay dispositivos asociados a este usuario: <?=$user->getEmail()?></p>
                     <?php else:?>
                         <select name="device_id" class="mdb-select form-control md-form colorful-select dropdown-primary">
                         <?php foreach($devices as $device):?>
@@ -46,6 +46,7 @@ include("head.php");
                     <br>
                     <button type="submit" class="btn btn-primary" value="submit">Seleccionar</button>
                 </div>
+                
             </form>
         <div class="card-deck">
             <div class="card shadow bg-light text-center">

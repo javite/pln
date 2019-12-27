@@ -1,6 +1,6 @@
 <div class="container-fluid height-bar"></div>
 
-<footer class="footer container-fluid">
+<footer class="footer container-fluid border-top">
     <div class="container  d-flex justify-content-around">
         <a class="ref_menu d-flex flex-column justify-content-center" href="main.php">
             <img src="images/isologo_grower-lab.svg" class="icon_menu"alt="">
