@@ -97,7 +97,7 @@ class DBMySQL extends DB {
       $humidity = $data->humidity;
       $soil_humidity_1 = $data->soil_humidity_1;
 
-      $consulta = $this->dataBase->prepare("insert into measurements values (null, :id_device, :temperature, :humidity, :soil_humidity_1, default)");
+      $consulta = $this->dataBase->prepare("INSERT into measurements values (null, :id_device, :temperature, :humidity, :soil_humidity_1, default)");
       $consulta->bindValue(':id_device',$idDevice,PDO::PARAM_INT);
       $consulta->bindValue(':temperature',$temperature ,PDO::PARAM_INT);
       $consulta->bindValue(':humidity',$humidity ,PDO::PARAM_INT);
@@ -202,8 +202,8 @@ class DBMySQL extends DB {
     return $json;
   }
 
-  public function updateProgram($data){
-    $output_id = 0; //TODO 
+  public function updateOutput($data){
+    $output_id = 0; 
     $out = 0;
     $days = "";
     $hour_on = "";
@@ -251,13 +251,86 @@ class DBMySQL extends DB {
     }
 
     $query = $this->dataBase->prepare("UPDATE outputs SET hour_on = '$hour_on', hour_off = '$hour_off', days = '$days', timerMode = '$timerMode' where id = '$output_id'");
-    $query->execute();
-    return "OK";
+    $response = $query->execute();
+    return $response;
+
+  }
+
+  public function newOutput($data){
+    $program_id = 0;
+    $out = 0;
+    $days = "";
+    $hour_on = "";
+    $hour_off = "";
+    $now = date("Y-m-d h:i:s");
+    $sensor_id = 0; //TODO
+    $max_sensor = 0; //TODO
+    $min_sensor = 0; //TODO
+    $period = 0; //TODO
+    $duration = 0; //TODO
+
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "program") !== false) {
+        $program_id = $data[$i]->value;
+      }
+    }
+
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "out") !== false) {
+        $out = $data[$i]->value;
+      }
+    }
+
+    for ($i=0; $i < sizeOf($data); $i++) { 
+        if (strpos($data[$i]->name, "hour_on") !== false) {
+          $hour_on = $hour_on.",".$data[$i]->value;
+        }
+    }
+    $hour_on = substr($hour_on,1);
+    $hour_on = '['.$hour_on.']';
+
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "hour_off") !== false) {
+        $hour_off = $hour_off.",".$data[$i]->value;
+      }
+    }
+    $hour_off = substr($hour_off,1);
+    $hour_off = '['.$hour_off.']';
+
+    for ($i=0; $i < sizeOf($data); $i++) { 
+      if (strpos($data[$i]->name, "day") !== false) {
+        $days = $days.",".$data[$i]->value;
+      }
+    }
+    $days = substr($days,1);
+    $days = '['.$days.']';
+    
+    if ($days == '[7]') {
+      $timerMode = 1; //PER_DAY = 0, DAILY = 1, PERIOD_DAILY = 2
+    } else {
+      $timerMode = 0;
+    }
+
+    $query = $this->dataBase->prepare("INSERT INTO outputs VALUES (default, :program_id, :out, :hour_on , :hour_off, :days, :timerMode, :created_at, :modified_at, :sensor_id, :max_sensor, :min_sensor, :period, :duration)");
+    $query->bindValue(':program_id',$program_id,PDO::PARAM_INT);
+    $query->bindValue(':out',$out,PDO::PARAM_INT);
+    $query->bindValue(':hour_on',$hour_on,PDO::PARAM_STR);
+    $query->bindValue(':hour_off',$hour_off,PDO::PARAM_STR);
+    $query->bindValue(':days',$days,PDO::PARAM_STR);
+    $query->bindValue(':timerMode',$timerMode,PDO::PARAM_INT);
+    $query->bindValue(':created_at',$now,PDO::PARAM_STR);
+    $query->bindValue(':modified_at',$now,PDO::PARAM_STR);
+    $query->bindValue(':sensor_id',$sensor_id,PDO::PARAM_INT);
+    $query->bindValue(':max_sensor',$max_sensor,PDO::PARAM_INT);
+    $query->bindValue(':min_sensor',$min_sensor,PDO::PARAM_INT);
+    $query->bindValue(':period',$period,PDO::PARAM_INT);
+    $query->bindValue(':duration',$duration,PDO::PARAM_INT); 
+    $response = $query->execute();
+    return $response;
 
   }
 
   public function getDevices($userID){
-
     $query = $this->dataBase->prepare("SELECT * FROM devices where user_id = :user_id");
     $query->bindValue(':user_id',$userID,PDO::PARAM_INT);
     $query->execute();

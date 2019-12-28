@@ -28,13 +28,15 @@ body{
     color: white;
     font-weight: 500;
 }
-.icon_menu{
-    filter: invert(45%);
+.menu-icon{
+    filter: invert(28%);
+}
+.menu-icon-img{
     height: 2em;
 }
 .text-icon{
-    font-size: 0.6rem;
-    color: gray;
+    font-size: 0.7rem;
+    color: black;
     text-align: center;
     margin-bottom: 0;
 }
@@ -195,6 +197,18 @@ canvas{
     filter: contrast(0.1);
 }
 .icon-out{
+    /* cursor: pointer;
+    width: 28px;
+    filter: contrast(0.1);
+    margin-right:5px;
+    margin-left:5px;
+    margin-bottom: 5px;
+    border: 1px solid #dee2e68a;
+    border-radius: 0.25rem;
+    padding: 2px;
+    box-shadow: 2px 2px 5px 0px rgba(84,89,83,0.4); */
+}
+.icon-out, [role="button"] {
     cursor: pointer;
     width: 28px;
     filter: contrast(0.1);
@@ -204,11 +218,22 @@ canvas{
     border: 1px solid #dee2e68a;
     border-radius: 0.25rem;
     padding: 2px;
+    box-shadow: 2px 2px 5px 0px rgba(84,89,83,0.4);
 }
+
+.icon-out:active,
+.icon-out:focus,
+[role="button"][aria-pressed="true"] {
+    filter: contrast(1);
+    border: 2px solid #d39e009c;
+    box-shadow: none;
+}
+
 .icon-out:first-child{
 margin-right: 8px;
 }
 .icon-out:hover{
     filter: contrast(1);
     border: 2px solid #d6b3188a;
+    box-shadow: none;
 }
