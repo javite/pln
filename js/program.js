@@ -1,39 +1,144 @@
-var empty_output = '{"id":"10","program_id":"1","out":"2","hour_on":["00:30"],"hour_off":["01:30"],"days":["7"],"timerMode":"1","created_at":"2019-12-17 17:44:00","modified_at":"0000-00-00 00:00:00","sensor_id":null,"max_sensor":null,"min_sensor":null,"period":null,"duration":null}';
+var empty_output = '{"id":"0","program_id":"0","out":"0","hour_on":["00:30"],"hour_off":["01:30"],"days":["7"],"timerMode":"1","created_at":"2019-12-17 17:44:00","modified_at":"0000-00-00 00:00:00","sensor_id":null,"max_sensor":null,"min_sensor":null,"period":null,"duration":null}';
 var outs_names;
 var days_names;
-var hasProgram = false;
 var output;
 var out_num = 0;
 var device_id;
 var program_id;
 var flag_new_day = false;
+var state_edit_program = "";
+var programs;
 
 $(document).ready(function(){
     device_id = getCookie('device_id');
     if(device_id == null){
         error("no hay device id");
     }
-    let reponse = getNames();
-    
-    $(".program-selector").change(function(){
-        out_num = 0;
-        program_id = $(this).val();
-        debug("program_id: ");
-        debug(program_id);
-        getOut(program_id, out_num);  
-    });
+    getPrograms(0);
 });
+
+function submit_(e){
+    let func;
+    e.preventDefault();
+    let data = JSON.stringify($('#program-form').serializeArray());
+    debug(data);
+    if(flag_new_day){
+        flag_new_day = false;
+        func = 'newOutput.php';
+    } else {
+        func = 'updateOutput.php';
+    }
+
+    fetch(func, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: data
+    })
+    .then(function(response) {
+        if(response.ok) {
+            return response.text()
+        } else {
+            throw "Error en: "+ func;
+        }
+     })
+    .then(function(texto) {
+        getOut(program_id, out_num);
+        console.log(texto);
+    })
+    .catch(function(err) {
+    popUp(err);
+    console.log("Update or add Output: ", err);
+    });
+}
+
+function saveProgramName(){
+    let func;
+    let form;
+    switch (state_edit_program) {
+        case 'EDIT':
+            func = 'saveProgram.php';
+            break;
+        case 'NEW':
+            func = 'newProgram.php';
+            break;
+        case 'ERASE':
+            func = 'eraseProgram.php';
+            break;
+        default:
+            func = '';
+            break;
+    }
+    if(func == ''){
+        error('Error in state_edit_program, empty.')
+    } else {
+        form = $('#program-form').serialize();
+        $.post(func, form,function(prog_id){
+            console.log(prog_id);
+            endEditProgram();
+            getPrograms(prog_id);
+        })
+    }
+    state_edit_program = '';
+
+    // fetch(func, {
+    //     method: 'POST',
+    //     body: form
+    // })
+    // .then(function(response) {
+    //     if(response.ok) {
+    //         return response.text()
+    //     } else {
+    //         throw "Error en: "+ func;
+    //     }
+    //  })
+    // .then(function(texto) {
+    // // getOut(program_id, out_num);
+    // console.log(texto);
+    // })
+    // .catch(function(err) {
+    // popUp(err);
+    // console.log("Update or add Output: ", err);
+    // });
+
+}
+
+function getPrograms(prog_selected){
+    fetch('api/getProgram.php?device_id=' + device_id)
+    .then(data =>data.json())
+    .then(data => {
+        programs = data;
+        console.log(data);
+        createProgramSelector(prog_selected);
+    })
+    .catch(error => console.log(error))
+}
+
+function getNames(){
+    $(".program-selector").hide();
+    fetch("api/getNames.php")
+    .then(data =>data.json())
+    .then(data => {
+        outs_names = data[1];
+        days_names = data[0];
+        $(".program-selector").show();
+        program_id = $(".program-selector").val();
+        getOutputs(program_id);
+    })
+    .catch(error => console.error(error))
+}
 
 function getOutputs(_program_id){
     $.get("api/getOut.php","program_id=" + _program_id, function(data){
         outputs = JSON.parse(data);
-        debug(data);
+        console.log(data);
         if(Object.entries(outputs).length === 0){ //no hay programa
-            error("No hay salidas programas");
+            console.log("No hay salidas programas");
         } else {                                 //hay programa
-            debug("Hay salidas programas");
-            getOut(_program_id, 0);
+            console.log("Hay salidas programas");
         }
+        getOut(_program_id, 0);
     });
 }
 
@@ -41,13 +146,51 @@ function getOut(_program_id, out_num){
     $.get("api/getOut.php","program_id=" + _program_id+ "&out_num=" + out_num, function(data){
         output = JSON.parse(data);
         if(isEmpty(output)){ //no hay programa
-            debug("la salida no esta programada");
+            console.log("la salida no esta programada");
         } else {                                 //hay programa
-            debug("la salida esta programada");
+            console.log("la salida esta programada");
         }
         createOutSelector(out_num);
         createDays();
     });
+}
+
+
+
+function createProgramSelector(prog_selected){
+    let selected = '';
+    $('#program-container').html("<form class ='form-program' id='program-form'></form>");
+    $('.form-program').append("<div class='program-selector-bundle border_1'></div>");
+    $('.form-program').append("<input type='hidden' name='device_id' value='" + device_id + "'>");
+    $('.program-selector-bundle').append("<div class='program-label-selector-bundle '></div>");
+    $('.program-label-selector-bundle').append("<label class='label-program-selector label' for='out'>Programas</label>");
+    $('.program-label-selector-bundle').append("<div class='icon-bundle-program'></div>");
+    $('.icon-bundle-program').append("<img src='images/new.svg' id='btn-new-program' class='icon-out' style='display:none;' role='button'  onclick='newProgram()'>");
+    $('.icon-bundle-program').append("<img src='images/edit_2.svg' id='btn-edit-program' class='icon-out' style='display:none;' role='button' onclick='editProgram()'>");
+    $('.icon-bundle-program').append("<img src='images/bin.svg' id='btn-erase-program' class='icon-out' style='display:none;' role='button' onclick='eraseProgram()'>");
+    if(programs.length == 0){
+        $('.program-selector-bundle').append("<div class='error'>No hay programas creados aun</div>");
+    } else {
+        $('.program-selector-bundle').append("<select class='program-selector form-control' name='program'></select>");
+        for (let i = 0; i < programs.length; i++){
+            if(prog_selected == programs[i].id){
+                selected = 'selected';
+            } else {
+                selected = '';
+            }
+            $('.program-selector').append("<option value=" + programs[i].id + " "+ selected + ">" + programs[i].name + "</option>");
+        }
+    $('.form-program').append('<div class="out-bundle border_1" style="display: none"></div>');
+    }
+    $('#btn-edit-program').fadeIn();
+    $('#btn-erase-program').fadeIn();
+    $('#btn-new-program').fadeIn();
+    $('.program-selector').change(function(){
+        out_num = 0;
+        program_id = $(this).val();
+        getOut(program_id, out_num);
+    });
+    getNames();
 }
 
 function createOutSelector(out_num_){
@@ -100,8 +243,12 @@ function createDays(){
             $('.h-off-bundle-' + i).append("<input type='time' class='h-off form-control text-center time' disabled name='hour_off-"+i+"' value = " + output.hour_off[i] + " >");
         }
         $('.out-bundle').append("<div class='submit-bundle'></div>");
-        $('.submit-bundle').append("<br><button type='submit' class='btn btn-primary' id='submit' style='display:none;' value='submit'>Enviar</button>");
+        $('.submit-bundle').append("<br><button type='submit' class='btn btn-primary mr-2' id='submit' style='display:none;' value='submit'>Enviar</button>");
+        $('.submit-bundle').append("<button type='button' class='btn btn-danger' id='cancel-day' style='display:none;'>Cancelar</button>");
         $('#program-form').submit(e => submit_(e)); //event SUBMIT
+        $('#cancel-day').click(function(){
+            editDays();
+        })
         if(!flag_new_day){
             $('#btn-edit-day').fadeIn();
         }
@@ -112,20 +259,56 @@ function createDays(){
     
 }
 
+function newProgram() {
+    state_edit_program = 'NEW';
+    $('.program-label-selector-bundle').hide();
+    $('.program-selector').hide();
+    $('.out-bundle').slideUp(200);
+    $('.program-selector-bundle').append("<div class='edit-bundle' style='display: none'></div>");
+    $('.edit-bundle').prepend('<label for="program_name">Nombre: </label><input class="form-control" type="text" name="program_name" value="">');
+    $('.edit-bundle').append("<br><button type='button' class='btn btn-primary mr-2' id='prog-name' onclick='saveProgramName()'>Guardar</button>");
+    $('.edit-bundle').append("<button type='button' class='btn btn-danger mr-2' id='' onclick='endEditProgram()'>Cancelar</button>");
+    $('.edit-bundle').fadeIn(500);
+}
+
+function editProgram() {
+    state_edit_program = 'EDIT';
+    let program_name = $('.program-selector option:selected').text();
+    let program_id = $('.program-selector option:selected').val();
+    $('.program-label-selector-bundle').hide();
+    $('.program-selector').hide();
+    $('.out-bundle').slideUp(200);
+    $('.program-selector-bundle').append("<div class='edit-bundle' style='display: none'></div>");
+    $('.edit-bundle').prepend('<label for="program_name">Nombre: </label><input class="form-control" type="text" name="program_name" value=' + program_name + '><input type="hidden" name="program_id" value=' + program_id + '>');
+    $('.edit-bundle').append("<br><button type='button' class='btn btn-primary mr-2' id='prog-name' onclick='saveProgramName()'>Guardar</button>");
+    $('.edit-bundle').append("<button type='button' class='btn btn-danger mr-2' id='' onclick='endEditProgram()'>Cancelar</button>");
+    $('.edit-bundle').fadeIn(500);
+}
+
+
+function eraseProgram() {
+    state_edit_program = 'ERASE';
+    let program_name = $('.program-selector').text();
+    // console.log(popUp("Seguro que desea borrar el programa " + program_name + "?", 2));
+    saveProgramName();
+}
+
+function endEditProgram(){
+    $('.edit-bundle').fadeOut(500);
+    $('.edit-bundle').remove();
+    $('.program-label-selector-bundle').fadeIn();
+    $('.program-selector').fadeIn();
+    $('.out-bundle').slideDown(500);
+}
+
 function addDay(){
     flag_new_day = true;
     output = JSON.parse(empty_output);
-    //createOutSelector(out_num) //crea salida 
     createDays(); //crea dia y horas
     grayDayTimeControls(false); // desgrisa controles de dia y horas
     $("#btn-edit-day").fadeOut();
     $("#submit").fadeIn();
 
-}
-
-function eraseDay(index){
-    $('.days-bundle').remove();
-    $('.error').remove();
 }
 
 function editDays(){
@@ -134,11 +317,18 @@ function editDays(){
     if(!pressed){
         prop = false;
         $("#submit").fadeIn();
+        $('#cancel-day').fadeIn();
+
     } else{
         prop = true;
         $("#submit").fadeOut();
+        $('#cancel-day').fadeOut();
     }
     grayDayTimeControls(prop);
+}
+
+function eraseDay(index){
+
 }
 
 function grayDayTimeControls(prop){
@@ -149,39 +339,6 @@ function grayDayTimeControls(prop){
     for (let index = 0; index <cantidad  ; index++) {
         $(".time").prop("disabled", prop);
     }
-}
-
-function submit_(e){
-    let func;
-    e.preventDefault();
-    let data = JSON.stringify($('#program-form').serializeArray());
-    console.log(data);
-    if(flag_new_day){
-        flag_new_day = false;
-        func = 'newOutput.php';
-    } else {
-        func = 'updateOutput.php';
-    }
-    fetch(func, {
-        method: 'POST',
-        body: data
-    })
-    .then(function(response) {
-        if(response.ok) {
-            return response.text()
-        } else {
-            throw "Error en la llamada Ajax";
-        }
-     
-     })
-     .then(function(texto) {
-        // out_num = $('.out-selector').val();
-        getOut(program_id, out_num);
-        console.log(texto);
-     })
-     .catch(function(err) {
-        console.log("Update or add Output: ", err);
-     });
 }
 
 function isEmpty(obj) {
@@ -202,16 +359,21 @@ function debug(message){
     console.log(debug);
 }
 
-function getNames(){
-    $(".program-selector").hide();
-    fetch("api/getNames.php")
-    .then(data =>data.json())
-    .then(data => {
-        outs_names = data[1];
-        days_names = data[0];
-        $(".program-selector").show();
-        program_id = $(".program-selector").val();
-        getOutputs(program_id);
+function popUp(message, btn){
+    let msg;
+    if(btn == 0){
+        msg = '<div id="popup"><div id="message"><p>' + message + '</p><button type="button" class="btn" id="accept">Aceptar</button></div></div>';
+    } else {
+        msg = '<div id="popup"><div id="message"><p>' + message + '</p><div class="buttons-bundle"><button type="button" class="btn btn-success" id="accept">Aceptar</button><button type="button" class="btn btn-danger" id="cancel">Cancelar</button></div></div></div>';
+    }
+    $("body").prepend(msg);
+    $('#accept').click(function(){
+        $('#popup').remove();
+        return true;
     })
-    .catch(error => console.error(error))
+    $('#cancel').click(function(){
+        $('#popup').remove();
+        return false;
+    })
+
 }

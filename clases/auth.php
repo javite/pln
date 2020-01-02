@@ -9,7 +9,7 @@ class Auth {
     }
   }
 
-  function login($email) {
+  public function login($email) {
     global $db;
     $user = $db->searchByEmail($email);
     $_SESSION["user_ID"] = $user->getId();
@@ -17,12 +17,12 @@ class Auth {
     $_SESSION["user_email"] = $email;
   }
 
-  function logout() {
+  public function logout() {
     session_destroy();
     setcookie("user_email", null, -1);
   }
 
-  function isLogged() {
+  public function isLogged() {
     return isset($_SESSION["user_email"]);
   }
 

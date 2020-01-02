@@ -8,7 +8,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 $query = $_GET;
-$results = $db->getProgram($query);
+$results = $db->getPrograms($query);
 echo $results;
 http_response_code(200);
 

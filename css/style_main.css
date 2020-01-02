@@ -5,6 +5,22 @@
 body{
     font-family: 'Quicksand', sans-serif;
 }
+a:link {
+    text-decoration: none;
+  }
+  
+  a:visited {
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  a:active {
+    text-decoration: none;
+  }
+
 .background-image {
     position: fixed;
     left: 0;
@@ -30,6 +46,10 @@ body{
 }
 .menu-icon{
     filter: invert(28%);
+}
+.menu-icon:hover{
+    filter: contrast(100%);
+    transform: scale(1.2);
 }
 .menu-icon-img{
     height: 2em;
@@ -196,18 +216,7 @@ canvas{
     width: 20px;
     filter: contrast(0.1);
 }
-.icon-out{
-    /* cursor: pointer;
-    width: 28px;
-    filter: contrast(0.1);
-    margin-right:5px;
-    margin-left:5px;
-    margin-bottom: 5px;
-    border: 1px solid #dee2e68a;
-    border-radius: 0.25rem;
-    padding: 2px;
-    box-shadow: 2px 2px 5px 0px rgba(84,89,83,0.4); */
-}
+
 .icon-out, [role="button"] {
     cursor: pointer;
     width: 28px;
@@ -236,4 +245,41 @@ margin-right: 8px;
     filter: contrast(1);
     border: 2px solid #d6b3188a;
     box-shadow: none;
+}
+
+#popup{
+width: 100%;
+height: 100%;
+background-color: #c8cbcf6b;
+z-index: 5000;
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+#message{
+    width: 260px;
+    height: 170px;
+    background-color: #7880a2;
+    z-index: 5001;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+}
+.buttons-bundle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 90%;
+}
+.program-label-selector-bundle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
 }

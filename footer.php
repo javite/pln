@@ -6,11 +6,11 @@
             <img src="images/isologo_grower-lab.svg" class="menu-icon-img"alt="">
             <p class="text-icon">inicio</p>
         </a>
-        <a class="menu-icon d-flex flex-column justify-content-center" href="stats.php?device_id=<?=$device_selected?>">
+        <a class="menu-icon d-flex flex-column justify-content-center" href="stats.php">
             <img src="images/statistics.svg" class="menu-icon-img"alt="">
             <p class="text-icon">estadísticas</p>
         </a>
-        <a class="menu-icon d-flex flex-column justify-content-center" href="program.php?device_id=<?=$device_selected?>">
+        <a class="menu-icon d-flex flex-column justify-content-center" href="program.php">
             <img src="images/calendar.svg" class="menu-icon-img"alt="">
             <p class="text-icon">programas</p>
         </a>

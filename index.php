@@ -35,7 +35,8 @@ switch (date('N')) {
 $date = $dia.", ".$date; 
 
 if($authentication->isLogged()){
-    $nombreUsuario = $_SESSION["usuarioLogueado"];
+    $authentication->login($_SESSION["user_email"]);
+    $nombreUsuario = $_SESSION["user_name"];
 } else {
     $nombreUsuario = "Ingresar";
 }

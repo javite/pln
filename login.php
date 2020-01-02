@@ -17,7 +17,7 @@ if ($_POST) {
   if (empty($errores)) {
     $authentication->login($_POST["email"]);
     if (isset($_POST["remember-me"])) {
-      setcookie("usuarioLogueado", $_POST["email"], time() + 60 * 60 * 24 * 7);
+      setcookie("user_email", $_POST["email"], time() + 60 * 60 * 24 * 7);
     }
     header("Location:main.php");exit;
   } else{

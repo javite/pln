@@ -107,12 +107,66 @@ class DBMySQL extends DB {
   }
 
   public function getPrograms($data){
-    $device_id = $data["device_id"];
+    $device_id = $data;
     $query = $this->dataBase->prepare("SELECT * FROM programs where device_id = :device_id");
     $query->bindValue(':device_id',$device_id,PDO::PARAM_INT);
     $query->execute();
     $programs = $query->fetchAll(PDO::FETCH_ASSOC);
     return json_encode($programs);
+  }
+
+  public function saveProgram($data){
+    $program_id = $data["program_id"];
+    $program_name = $data["program_name"];
+    
+    $query = $this->dataBase->prepare("SELECT * FROM programs where id = :program_id");
+    $query->bindValue(':program_id',$program_id,PDO::PARAM_INT);
+    $query->execute();
+    $programs = $query->fetchAll(PDO::FETCH_ASSOC);
+    if (sizeOf($programs) == 0) {
+      $response = 0;
+    } else {
+      $query = $this->dataBase->prepare("UPDATE programs SET name = '$program_name' where id = '$program_id'");
+      $response = $query->execute();
+
+    }
+
+    return $program_id; //TODO: ver errores
+  }
+
+  public function eraseProgram($data){
+    $program_id = $data["program"];
+    
+    $query = $this->dataBase->prepare("DELETE FROM programs where id = '$program_id'");
+    $response = $query->execute();
+
+    return 0; //TODO: ver errores
+  }
+
+  public function newProgram($data){
+    $device_id = 1;
+    $program_name = $data["program_name"];
+  
+    $photo_periods = 1;
+    $now = date("Y-m-d h:i:s");
+    $query = $this->dataBase->prepare("SELECT * FROM programs where name = :program_name");
+    $query->bindValue(':program_name',$program_name,PDO::PARAM_STR);
+    $query->execute();
+    $programs = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    if (sizeOf($programs) == 0) {  
+      $query = $this->dataBase->prepare("INSERT into programs values (null, :device_id, :name, :photo_periods, :created_at, :modified_at)");
+      $query->bindValue(':device_id',$device_id,PDO::PARAM_INT);
+      $query->bindValue(':name',$program_name,PDO::PARAM_STR);
+      $query->bindValue(':photo_periods',$photo_periods,PDO::PARAM_INT);
+      $query->bindValue(':created_at',$now,PDO::PARAM_STR);
+      $query->bindValue(':modified_at',$now,PDO::PARAM_STR);
+      $query->execute();
+      $id = $this->dataBase->lastInsertId();
+    } else {
+      $id = 0;
+    }
+    return $id; //TODO: ver errores
   }
 
   public function getOutputs($data){
